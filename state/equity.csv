@@ -3,3 +3,5 @@ bar_utc,ledger,strategy,equity
 2026-11-17 11:00:00+00:00,challenger_1,lead_lag,100.0
 2026-11-17 11:00:00+00:00,challenger_2,funding_reversion,100.0
 2026-11-17 12:00:00+00:00,champion,trend_4h,99.897
+2026-11-17 13:00:00+00:00,champion,trend_4h,99.9318
+2026-11-17 14:00:00+00:00,champion,trend_4h,99.9705
