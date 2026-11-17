@@ -1,3 +1,4 @@
-streamlit==1.50.0
-pandas==3.0.5
-numpy==2.5.3
+# Loose pins so Streamlit Cloud can pick versions that exist for its Python.
+streamlit>=1.40,<2
+pandas>=2.2
+numpy>=1.26
