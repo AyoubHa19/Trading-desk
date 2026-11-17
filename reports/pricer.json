@@ -1,0 +1,87 @@
+{
+  "method": "Fair value = what the price \"should\" be 24h from now given trend, volatility,\nfunding, open interest and BTC (cross-market). It is a small ridge regression\nof the next-24h log return on those inputs, re-trained every month on the\nprevious 12 months only (with a 24h gap so no training label peeks into the test).",
+  "markets": {
+    "BTC": {
+      "oos_rank_ic": 0.0214,
+      "oos_rank_ic_daily_nonoverlap": -0.002,
+      "hit_rate_pct": 51.4,
+      "avg_abs_pred_pct": 0.262,
+      "n_days": 1081
+    },
+    "ETH": {
+      "oos_rank_ic": -0.0052,
+      "oos_rank_ic_daily_nonoverlap": -0.0162,
+      "hit_rate_pct": 49.7,
+      "avg_abs_pred_pct": 0.331,
+      "n_days": 1081
+    },
+    "SOL": {
+      "oos_rank_ic": 0.0539,
+      "oos_rank_ic_daily_nonoverlap": 0.0628,
+      "hit_rate_pct": 51.7,
+      "avg_abs_pred_pct": 0.485,
+      "n_days": 1081
+    },
+    "GOLD": {
+      "oos_rank_ic": -0.0123,
+      "oos_rank_ic_daily_nonoverlap": -0.0202,
+      "hit_rate_pct": 51.1,
+      "avg_abs_pred_pct": 0.117,
+      "n_days": 1081
+    },
+    "EUR": {
+      "oos_rank_ic": 0.0159,
+      "oos_rank_ic_daily_nonoverlap": 0.0308,
+      "hit_rate_pct": 49.5,
+      "avg_abs_pred_pct": 0.05,
+      "n_days": 1081
+    }
+  },
+  "fair_value_now": [
+    {
+      "market": "BTC",
+      "as_of_utc": "2026-11-17 00:00:00+00:00",
+      "source": "data.binance.vision 1h close",
+      "fair_value_24h": 64477.3495,
+      "price": 64856.0,
+      "gap_pct": -0.586,
+      "label": "MODEL ESTIMATE"
+    },
+    {
+      "market": "ETH",
+      "as_of_utc": "2026-11-17 00:00:00+00:00",
+      "source": "data.binance.vision 1h close",
+      "fair_value_24h": 1804.06,
+      "price": 1819.64,
+      "gap_pct": -0.86,
+      "label": "MODEL ESTIMATE"
+    },
+    {
+      "market": "SOL",
+      "as_of_utc": "2026-11-17 00:00:00+00:00",
+      "source": "data.binance.vision 1h close",
+      "fair_value_24h": 71.1929,
+      "price": 71.52,
+      "gap_pct": -0.458,
+      "label": "MODEL ESTIMATE"
+    },
+    {
+      "market": "GOLD",
+      "as_of_utc": "2026-11-17 00:00:00+00:00",
+      "source": "data.binance.vision 1h close",
+      "fair_value_24h": 3853.4871,
+      "price": 3850.89,
+      "gap_pct": 0.067,
+      "label": "MODEL ESTIMATE"
+    },
+    {
+      "market": "EUR",
+      "as_of_utc": "2026-11-17 00:00:00+00:00",
+      "source": "data.binance.vision 1h close",
+      "fair_value_24h": 1.101,
+      "price": 1.1006,
+      "gap_pct": 0.032,
+      "label": "MODEL ESTIMATE"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "market": "BTC",
+    "first_bar_utc": "2022-11-01 00:00:00+00:00",
+    "last_bar_utc": "2026-11-16 23:00:00+00:00",
+    "bars": 35448,
+    "missing_hours": 0,
+    "missing_examples": [],
+    "bad_ohlc_bars": 0,
+    "max_abs_1h_move_pct": 6.26,
+    "max_move_at_utc": "2023-04-26 19:00:00+00:00",
+    "zero_volume_bars": 1
+  },
+  {
+    "market": "ETH",
+    "first_bar_utc": "2022-11-01 00:00:00+00:00",
+    "last_bar_utc": "2026-11-16 23:00:00+00:00",
+    "bars": 35448,
+    "missing_hours": 0,
+    "missing_examples": [],
+    "bad_ohlc_bars": 0,
+    "max_abs_1h_move_pct": 11.58,
+    "max_move_at_utc": "2025-02-03 01:00:00+00:00",
+    "zero_volume_bars": 1
+  },
+  {
+    "market": "SOL",
+    "first_bar_utc": "2022-11-01 00:00:00+00:00",
+    "last_bar_utc": "2026-11-16 23:00:00+00:00",
+    "bars": 35448,
+    "missing_hours": 0,
+    "missing_examples": [],
+    "bad_ohlc_bars": 0,
+    "max_abs_1h_move_pct": 23.16,
+    "max_move_at_utc": "2022-11-10 03:00:00+00:00",
+    "zero_volume_bars": 1
+  },
+  {
+    "market": "GOLD",
+    "first_bar_utc": "2022-11-01 00:00:00+00:00",
+    "last_bar_utc": "2026-11-16 23:00:00+00:00",
+    "bars": 35447,
+    "missing_hours": 1,
+    "missing_examples": [
+      "2023-03-24 13:00:00+00:00"
+    ],
+    "bad_ohlc_bars": 0,
+    "max_abs_1h_move_pct": 19.83,
+    "max_move_at_utc": "2024-04-13 20:00:00+00:00",
+    "zero_volume_bars": 1
+  },
+  {
+    "market": "EUR",
+    "first_bar_utc": "2022-11-01 00:00:00+00:00",
+    "last_bar_utc": "2026-11-16 23:00:00+00:00",
+    "bars": 35447,
+    "missing_hours": 1,
+    "missing_examples": [
+      "2023-03-24 13:00:00+00:00"
+    ],
+    "bad_ohlc_bars": 0,
+    "max_abs_1h_move_pct": 3.92,
+    "max_move_at_utc": "2024-03-05 19:00:00+00:00",
+    "zero_volume_bars": 1
+  },
+  {
+    "market": "XAU_PERP",
+    "first_bar_utc": "2025-12-11 08:00:00+00:00",
+    "last_bar_utc": "2026-10-31 23:00:00+00:00",
+    "bars": 7792,
+    "missing_hours": 0,
+    "missing_examples": [],
+    "bad_ohlc_bars": 0,
+    "max_abs_1h_move_pct": 5.39,
+    "max_move_at_utc": "2026-01-29 15:00:00+00:00",
+    "zero_volume_bars": 0
+  }
+]

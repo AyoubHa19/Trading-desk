@@ -1,0 +1,202 @@
+{
+ "champion": {
+  "config": {
+   "name": "trend_4h",
+   "params": {
+    "lookback_4h": 120,
+    "stop_atr": 8.0
+   },
+   "risk": {
+    "BTC": 0.007,
+    "ETH": 0.01,
+    "SOL": 0.01,
+    "GOLD": 0.01
+   },
+   "markets": [
+    "BTC",
+    "ETH",
+    "GOLD",
+    "SOL"
+   ],
+   "passed_gates": true,
+   "score": 3.17
+  },
+  "book": {
+   "markets": [
+    "BTC",
+    "ETH",
+    "GOLD",
+    "SOL"
+   ],
+   "realized": 99.92135374301844,
+   "pos": {
+    "BTC": {
+     "units": -0.00017456068893285215,
+     "entry": 64905.4,
+     "risk": 0.7000000000000001,
+     "t": "2026-11-17 11:00:00+00:00",
+     "stop": 68915.46666666667,
+     "entry_cost": 0.00793095193762364,
+     "funding": 0.0
+    },
+    "ETH": {
+     "units": -0.0067072758953623845,
+     "entry": 1819.49,
+     "risk": 0.9999206904806238,
+     "t": "2026-11-17 11:00:00+00:00",
+     "stop": 1968.57,
+     "entry_cost": 0.008542674993197033,
+     "funding": 0.0
+    },
+    "GOLD": {
+     "units": -0.009361753405718046,
+     "entry": 3874.0,
+     "risk": 0.9998352637306919,
+     "t": "2026-11-17 11:00:00+00:00",
+     "stop": 3980.8000000000006,
+     "entry_cost": 0.054401149040627574,
+     "funding": 0.0
+    },
+    "SOL": {
+     "units": -0.15125498268016435,
+     "entry": 73.4,
+     "risk": 0.9992912522402855,
+     "t": "2026-11-17 11:00:00+00:00",
+     "stop": 80.00666666666667,
+     "entry_cost": 0.007771481010106844,
+     "funding": 0.0
+    }
+   },
+   "blocked": {
+    "BTC": 0,
+    "ETH": 0,
+    "GOLD": 0,
+    "SOL": 0
+   },
+   "guard": {
+    "day": "2026-11-17",
+    "day_start_equity": 100.0,
+    "streak": 0,
+    "halted": false,
+    "reason": "",
+    "log": []
+   },
+   "trades": [],
+   "cost": {
+    "BTC": 0.0007,
+    "ETH": 0.0007,
+    "GOLD": 0.0015,
+    "SOL": 0.0007
+   }
+  },
+  "closed_through": "2026-11-17 10:00:00+00:00",
+  "opened_bar": "2026-11-17 11:00:00+00:00",
+  "live_open": {
+   "BTC": 64905.4,
+   "ETH": 1819.49,
+   "GOLD": 3874.0,
+   "SOL": 73.4
+  }
+ },
+ "challenger_1": {
+  "config": {
+   "name": "lead_lag",
+   "params": {
+    "k": 3.0,
+    "hold_h": 2,
+    "stop_atr": 3.0
+   },
+   "risk": {
+    "ETH": 0.01,
+    "SOL": 0.01
+   },
+   "markets": [
+    "ETH",
+    "SOL"
+   ],
+   "passed_gates": false,
+   "score": 3.17
+  },
+  "book": {
+   "markets": [
+    "ETH",
+    "SOL"
+   ],
+   "realized": 100.0,
+   "pos": {
+    "ETH": null,
+    "SOL": null
+   },
+   "blocked": {
+    "ETH": 0,
+    "SOL": 0
+   },
+   "guard": {
+    "day": "2026-11-17",
+    "day_start_equity": 100.0,
+    "streak": 0,
+    "halted": false,
+    "reason": "",
+    "log": []
+   },
+   "trades": [],
+   "cost": {
+    "ETH": 0.0007,
+    "SOL": 0.0007
+   }
+  },
+  "closed_through": "2026-11-17 10:00:00+00:00",
+  "opened_bar": "2026-11-17 11:00:00+00:00",
+  "live_open": {
+   "ETH": 1819.49,
+   "SOL": 73.4
+  }
+ },
+ "challenger_2": {
+  "config": {
+   "name": "funding_reversion",
+   "params": {
+    "z": 1.5,
+    "hold_h": 72,
+    "stop_atr": 3.0
+   },
+   "risk": {
+    "ETH": 0.001
+   },
+   "markets": [
+    "ETH"
+   ],
+   "passed_gates": false,
+   "score": 3.0
+  },
+  "book": {
+   "markets": [
+    "ETH"
+   ],
+   "realized": 100.0,
+   "pos": {
+    "ETH": null
+   },
+   "blocked": {
+    "ETH": 0
+   },
+   "guard": {
+    "day": "2026-11-17",
+    "day_start_equity": 100.0,
+    "streak": 0,
+    "halted": false,
+    "reason": "",
+    "log": []
+   },
+   "trades": [],
+   "cost": {
+    "ETH": 0.0007
+   }
+  },
+  "closed_through": "2026-11-17 10:00:00+00:00",
+  "opened_bar": "2026-11-17 11:00:00+00:00",
+  "live_open": {
+   "ETH": 1819.49
+  }
+ }
+}
