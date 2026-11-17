@@ -59,7 +59,8 @@ class Book:
         pnl = move - cost - p["entry_cost"] + p["funding"]
         self.trades.append({"market": m, "dir": int(np.sign(p["units"])), "entry_time": p["t"], "exit_time": t,
                             "entry": p["entry"], "exit": price, "units": p["units"], "risk": p["risk"],
-                            "pnl": pnl, "R": pnl / p["risk"] if p["risk"] else 0.0, "reason": reason})
+                            "pnl": pnl, "R": pnl / p["risk"] if p["risk"] else 0.0, "reason": reason,
+                            "why": p.get("why")})
         self.guard.record_trade(pnl)
         self.pos[m] = None
 
@@ -69,8 +70,9 @@ class Book:
                 self._close(m, t, px[m], reason)
 
     # ------------------------------------------------------------ the hour
-    def open_bar(self, t, ny_day, opens, funding, decisions, prev_close, stop_atr, risk_frac):
-        """decisions[m] = (target, atr, quote_vol_24h) known at the previous close."""
+    def open_bar(self, t, ny_day, opens, funding, decisions, prev_close, stop_atr, risk_frac, why=None):
+        """decisions[m] = (target, atr, quote_vol_24h) known at the previous close.
+        why[m] (optional, bot only): the facts behind the decision, saved on the position."""
         self.guard.new_bar(ny_day, self.equity(prev_close))
         halted = self._halted_at_open = self.guard.halted
 
@@ -99,6 +101,8 @@ class Book:
                     self.realized -= cost
                     self.pos[m] = {"units": want * units, "entry": entry, "risk": risk_amt, "t": t,
                                    "stop": entry - want * stop_dist, "entry_cost": cost, "funding": 0.0}
+                    if why and why.get(m):
+                        self.pos[m]["why"] = dict(why[m], stop_atr=stop_atr[m], atr=atr, risk_pct=100 * risk_frac[m])
 
         for m in self.markets:          # funding on perps held through a funding timestamp
             p = self.pos[m]

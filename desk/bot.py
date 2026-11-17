@@ -23,7 +23,7 @@ from desk import okx
 from desk.engine import Book
 from desk.features import add_features
 from desk.risk import data_looks_wrong
-from desk.strategies import STRATEGIES
+from desk.strategies import STRATEGIES, explain
 
 STATE = Path("state")
 MAX_CATCH_UP_HOURS = 72
@@ -125,8 +125,9 @@ def step_ledger(role, cfg, led, data, feats, live_px, now):
         last_closed = current - pd.Timedelta(hours=1)
         ny = str(current.tz_convert(C.TIMEZONE).date())
         fund = {m: float(data[m].get("funding", pd.Series()).get(current, 0.0)) for m in markets}
+        why = {m: explain(cfg["name"], data[m], params, last_closed) for m in markets}
         book.open_bar(str(current), ny, live_px, fund, decisions(current),
-                      {m: bar(m, last_closed, "close") for m in markets}, stop_atr, cfg["risk"])
+                      {m: bar(m, last_closed, "close") for m in markets}, stop_atr, cfg["risk"], why)
         led["opened_bar"], led["live_open"] = str(current), {m: live_px[m] for m in markets}
         if led["closed_through"] is None:
             led["closed_through"] = str(last_closed)
@@ -165,6 +166,7 @@ def main():
         raise SystemExit("state/strategy.json missing: run python -m desk.quant first")
     ledgers = read_json(STATE / "ledgers.json", {})
     active = {r: c for r, c in cfg_doc["ledgers"].items() if c and c["markets"]}
+    ledgers = {r: led for r, led in ledgers.items() if r in active}  # retired bots are dropped
     needed = sorted({"BTC", *[m for c in active.values() for m in c["markets"]]})
 
     data = {m: fetch_market(m) for m in needed}

@@ -37,7 +37,18 @@
      "t": "2026-11-17 11:00:00+00:00",
      "stop": 68915.46666666667,
      "entry_cost": 0.00793095193762364,
-     "funding": 0.0
+     "funding": 0.0,
+     "why": {
+      "rule": "trend_4h",
+      "price_now": 64086.7,
+      "price_then": 81293.9,
+      "then_utc": "2026-10-28 12:00:00+00:00",
+      "lookback_days": 20.0,
+      "change_pct": -21.16665580074274,
+      "stop_atr": 8.0,
+      "atr": 501.25833333333384,
+      "risk_pct": 0.7000000000000001
+     }
     },
     "ETH": {
      "units": -0.0067072758953623845,
@@ -46,7 +57,18 @@
      "t": "2026-11-17 11:00:00+00:00",
      "stop": 1968.57,
      "entry_cost": 0.008542674993197033,
-     "funding": 0.0
+     "funding": 0.0,
+     "why": {
+      "rule": "trend_4h",
+      "price_now": 1787.92,
+      "price_then": 2360.55,
+      "then_utc": "2026-10-28 12:00:00+00:00",
+      "lookback_days": 20.0,
+      "change_pct": -24.258329626570085,
+      "stop_atr": 8.0,
+      "atr": 18.63499999999999,
+      "risk_pct": 1.0
+     }
     },
     "GOLD": {
      "units": -0.009361753405718046,
@@ -55,7 +77,18 @@
      "t": "2026-11-17 11:00:00+00:00",
      "stop": 3980.8000000000006,
      "entry_cost": 0.054401149040627574,
-     "funding": 0.0
+     "funding": 0.0,
+     "why": {
+      "rule": "trend_4h",
+      "price_now": 3860.8,
+      "price_then": 4054.9,
+      "then_utc": "2026-10-28 12:00:00+00:00",
+      "lookback_days": 20.0,
+      "change_pct": -4.786801154159159,
+      "stop_atr": 8.0,
+      "atr": 13.35000000000006,
+      "risk_pct": 1.0
+     }
     },
     "SOL": {
      "units": -0.15125498268016435,
@@ -64,7 +97,18 @@
      "t": "2026-11-17 11:00:00+00:00",
      "stop": 80.00666666666667,
      "entry_cost": 0.007771481010106844,
-     "funding": 0.0
+     "funding": 0.0,
+     "why": {
+      "rule": "trend_4h",
+      "price_now": 72.09,
+      "price_then": 102.68,
+      "then_utc": "2026-10-28 12:00:00+00:00",
+      "lookback_days": 20.0,
+      "change_pct": -29.79158550837554,
+      "stop_atr": 8.0,
+      "atr": 0.8258333333333331,
+      "risk_pct": 1.0
+     }
     }
    },
    "blocked": {
@@ -89,114 +133,13 @@
     "SOL": 0.0007
    }
   },
-  "closed_through": "2026-11-17 11:00:00+00:00",
-  "opened_bar": "2026-11-17 12:00:00+00:00",
+  "closed_through": "2026-11-17 12:00:00+00:00",
+  "opened_bar": "2026-11-17 13:00:00+00:00",
   "live_open": {
-   "BTC": 64965.2,
-   "ETH": 1822.27,
-   "GOLD": 3865.4,
-   "SOL": 73.6
-  }
- },
- "challenger_1": {
-  "config": {
-   "name": "lead_lag",
-   "params": {
-    "k": 3.0,
-    "hold_h": 2,
-    "stop_atr": 3.0
-   },
-   "risk": {
-    "ETH": 0.01,
-    "SOL": 0.01
-   },
-   "markets": [
-    "ETH",
-    "SOL"
-   ],
-   "passed_gates": false,
-   "score": 3.17
-  },
-  "book": {
-   "markets": [
-    "ETH",
-    "SOL"
-   ],
-   "realized": 100.0,
-   "pos": {
-    "ETH": null,
-    "SOL": null
-   },
-   "blocked": {
-    "ETH": 0,
-    "SOL": 0
-   },
-   "guard": {
-    "day": "2026-11-17",
-    "day_start_equity": 100.0,
-    "streak": 0,
-    "halted": false,
-    "reason": "",
-    "log": []
-   },
-   "trades": [],
-   "cost": {
-    "ETH": 0.0007,
-    "SOL": 0.0007
-   }
-  },
-  "closed_through": "2026-11-17 11:00:00+00:00",
-  "opened_bar": "2026-11-17 12:00:00+00:00",
-  "live_open": {
-   "ETH": 1822.27,
-   "SOL": 73.6
-  }
- },
- "challenger_2": {
-  "config": {
-   "name": "funding_reversion",
-   "params": {
-    "z": 1.5,
-    "hold_h": 72,
-    "stop_atr": 3.0
-   },
-   "risk": {
-    "ETH": 0.001
-   },
-   "markets": [
-    "ETH"
-   ],
-   "passed_gates": false,
-   "score": 3.0
-  },
-  "book": {
-   "markets": [
-    "ETH"
-   ],
-   "realized": 100.0,
-   "pos": {
-    "ETH": null
-   },
-   "blocked": {
-    "ETH": 0
-   },
-   "guard": {
-    "day": "2026-11-17",
-    "day_start_equity": 100.0,
-    "streak": 0,
-    "halted": false,
-    "reason": "",
-    "log": []
-   },
-   "trades": [],
-   "cost": {
-    "ETH": 0.0007
-   }
-  },
-  "closed_through": "2026-11-17 11:00:00+00:00",
-  "opened_bar": "2026-11-17 12:00:00+00:00",
-  "live_open": {
-   "ETH": 1822.27
+   "BTC": 65089.1,
+   "ETH": 1824.39,
+   "GOLD": 3867.5,
+   "SOL": 73.99
   }
  }
 }

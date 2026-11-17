@@ -254,8 +254,7 @@ def select(results_path="reports/quant_results.json", out="state/strategy.json")
     passing = [r for r in live_ok if r["passes"]]
     others = [r for r in live_ok if not r["passes"] and r["oos"]["return_pct"] > 0]
     picks = {"champion": passing[0] if passing else None}
-    for k, r in enumerate((passing[1:] + others)[:2], start=1):
-        picks[f"challenger_{k}"] = r
+    # Owner's choice (2026-11-17): trade the champion only, no challengers.
     if DATA is None:
         _init()
     end = DATA["BTC"].index[-1]

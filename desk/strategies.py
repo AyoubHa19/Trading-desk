@@ -130,3 +130,17 @@ STRATEGIES = {
         "cause": "slow proxy market vs fast real market",
     },
 }
+
+
+def explain(name: str, df: pd.DataFrame, params: dict, t) -> dict:
+    """The facts behind a decision taken at the close of bar t (for the trade screen)."""
+    if name == "trend_4h":
+        c4 = to_4h(df.loc[:t])["close"]
+        n = params["lookback_4h"]
+        if len(c4) <= n:
+            return {}
+        now, then = float(c4.iloc[-1]), float(c4.iloc[-1 - n])
+        return {"rule": "trend_4h", "price_now": now, "price_then": then,
+                "then_utc": str(c4.index[-1 - n] + pd.Timedelta(hours=1)), "lookback_days": n * 4 / 24,
+                "change_pct": 100 * (now / then - 1)}
+    return {"rule": name}

@@ -22,40 +22,7 @@
       ],
       "passed_gates": true,
       "score": 3.17
-    },
-    "challenger_1": {
-      "name": "lead_lag",
-      "params": {
-        "k": 3.0,
-        "hold_h": 2,
-        "stop_atr": 3.0
-      },
-      "risk": {
-        "ETH": 0.01,
-        "SOL": 0.01
-      },
-      "markets": [
-        "ETH",
-        "SOL"
-      ],
-      "passed_gates": false,
-      "score": 3.17
-    },
-    "challenger_2": {
-      "name": "funding_reversion",
-      "params": {
-        "z": 1.5,
-        "hold_h": 72,
-        "stop_atr": 3.0
-      },
-      "risk": {
-        "ETH": 0.001
-      },
-      "markets": [
-        "ETH"
-      ],
-      "passed_gates": false,
-      "score": 3.0
     }
-  }
+  },
+  "note": "Owner's choice 2026-11-17: champion only, no challengers."
 }
