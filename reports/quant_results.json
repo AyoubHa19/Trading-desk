@@ -2,27 +2,27 @@
   {
     "name": "trend_4h",
     "oos": {
-      "return_pct": 52.959,
-      "cagr_pct": 15.428,
-      "sharpe": 0.834,
-      "max_dd_pct": -19.925,
-      "trades": 905,
-      "win_rate_pct": 35.249,
-      "avg_R": 0.075,
+      "return_pct": 72.107,
+      "cagr_pct": 20.116,
+      "sharpe": 0.841,
+      "max_dd_pct": -33.584,
+      "trades": 896,
+      "win_rate_pct": 34.487,
+      "avg_R": 0.084,
       "worst_losing_streak": 21,
-      "worst_month_pct": -9.424,
+      "worst_month_pct": -15.837,
       "worst_month": "2025-09"
     },
     "costs_doubled": {
-      "return_pct": 35.223,
-      "cagr_pct": 10.724,
-      "sharpe": 0.622,
-      "max_dd_pct": -22.681,
-      "trades": 850,
-      "win_rate_pct": 31.647,
-      "avg_R": 0.069,
+      "return_pct": 28.458,
+      "cagr_pct": 8.822,
+      "sharpe": 0.461,
+      "max_dd_pct": -39.647,
+      "trades": 835,
+      "win_rate_pct": 30.659,
+      "avg_R": 0.063,
       "worst_losing_streak": 21,
-      "worst_month_pct": -10.38,
+      "worst_month_pct": -17.314,
       "worst_month": "2025-09"
     },
     "buy_and_hold": {
@@ -35,24 +35,24 @@
       "worst_month": "2025-02"
     },
     "regime_sharpe": {
-      "bull": 2.73,
-      "bear": 3.66,
-      "chop": -0.83
+      "bull": 2.25,
+      "bear": 3.61,
+      "chop": -0.57
     },
     "monte_carlo": {
-      "p5_return_pct": -1.8,
-      "median_return_pct": 48.8,
-      "p95_max_dd_pct": -27.0,
-      "prob_loss_pct": 5.9
+      "p5_return_pct": -13.0,
+      "median_return_pct": 64.5,
+      "p95_max_dd_pct": -39.1,
+      "prob_loss_pct": 10.3
     },
     "score": {
       "profit": 4,
       "sharpe": 3,
-      "drawdown": 3,
+      "drawdown": 1,
       "trades": 5,
       "losing_streak": 1,
       "regimes": 3,
-      "total": 3.17
+      "total": 2.83
     },
     "gates": {
       "beats_buy_and_hold_sharpe": true,
@@ -61,23 +61,23 @@
       "enough_trades": true
     },
     "passes": true,
-    "halts": 117,
+    "halts": 114,
     "by_market": {
       "BTC": {
-        "count": 254,
-        "sum": -10.16
+        "count": 250,
+        "sum": -17.26
       },
       "ETH": {
-        "count": 296,
-        "sum": 20.76
+        "count": 292,
+        "sum": 20.41
       },
       "GOLD": {
-        "count": 108,
-        "sum": 5.97
+        "count": 111,
+        "sum": 0.83
       },
       "SOL": {
-        "count": 247,
-        "sum": 36.4
+        "count": 243,
+        "sum": 68.13
       }
     },
     "folds": [
@@ -88,7 +88,7 @@
           "stop_atr": 8.0
         },
         "risk": {
-          "BTC": 0.01,
+          "BTC": 0.015,
           "SOL": 0.009
         }
       },
@@ -110,7 +110,7 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.008,
+          "BTC": 0.007,
           "SOL": 0.008
         }
       },
@@ -133,9 +133,9 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.008,
+          "BTC": 0.007,
           "ETH": 0.005,
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -145,10 +145,10 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.002,
-          "ETH": 0.005,
-          "SOL": 0.01,
-          "GOLD": 0.01
+          "BTC": 0.001,
+          "ETH": 0.004,
+          "SOL": 0.02,
+          "GOLD": 0.013
         }
       },
       {
@@ -158,9 +158,9 @@
           "stop_atr": 8.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01,
-          "SOL": 0.01
+          "BTC": 0.014,
+          "ETH": 0.011,
+          "SOL": 0.02
         }
       },
       {
@@ -170,9 +170,9 @@
           "stop_atr": 8.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01,
-          "SOL": 0.01
+          "BTC": 0.018,
+          "ETH": 0.015,
+          "SOL": 0.015
         }
       },
       {
@@ -182,7 +182,7 @@
           "stop_atr": 8.0
         },
         "risk": {
-          "ETH": 0.01,
+          "ETH": 0.018,
           "SOL": 0.004,
           "GOLD": 0.001
         }
@@ -194,7 +194,7 @@
           "stop_atr": 8.0
         },
         "risk": {
-          "ETH": 0.01,
+          "ETH": 0.012,
           "GOLD": 0.007
         }
       },
@@ -217,8 +217,8 @@
         },
         "risk": {
           "ETH": 0.009,
-          "SOL": 0.01,
-          "GOLD": 0.01
+          "SOL": 0.016,
+          "GOLD": 0.014
         }
       }
     ],
@@ -232,28 +232,28 @@
   {
     "name": "lead_lag",
     "oos": {
-      "return_pct": 4.193,
-      "cagr_pct": 1.396,
-      "sharpe": 0.255,
-      "max_dd_pct": -5.873,
+      "return_pct": 8.38,
+      "cagr_pct": 2.754,
+      "sharpe": 0.298,
+      "max_dd_pct": -10.844,
       "trades": 261,
       "win_rate_pct": 49.042,
       "avg_R": 0.018,
       "worst_losing_streak": 7,
-      "worst_month_pct": -1.923,
-      "worst_month": "2024-07"
+      "worst_month_pct": -3.193,
+      "worst_month": "2025-09"
     },
     "costs_doubled": {
-      "return_pct": -5.812,
-      "cagr_pct": -2.001,
-      "sharpe": -0.295,
-      "max_dd_pct": -8.945,
+      "return_pct": -9.708,
+      "cagr_pct": -3.389,
+      "sharpe": -0.251,
+      "max_dd_pct": -16.482,
       "trades": 259,
       "win_rate_pct": 44.788,
       "avg_R": -0.021,
       "worst_losing_streak": 8,
-      "worst_month_pct": -2.636,
-      "worst_month": "2026-11"
+      "worst_month_pct": -3.722,
+      "worst_month": "2024-07"
     },
     "buy_and_hold": {
       "return_pct": 15.755,
@@ -265,24 +265,24 @@
       "worst_month": "2025-02"
     },
     "regime_sharpe": {
-      "bull": 0.09,
-      "bear": 2.69,
-      "chop": -1.0
+      "bull": -0.01,
+      "bear": 2.84,
+      "chop": -0.89
     },
     "monte_carlo": {
-      "p5_return_pct": -10.6,
-      "median_return_pct": 4.0,
-      "p95_max_dd_pct": -15.3,
-      "prob_loss_pct": 34.0
+      "p5_return_pct": -17.5,
+      "median_return_pct": 7.9,
+      "p95_max_dd_pct": -25.7,
+      "prob_loss_pct": 33.0
     },
     "score": {
       "profit": 2,
       "sharpe": 2,
-      "drawdown": 4,
+      "drawdown": 3,
       "trades": 5,
       "losing_streak": 3,
-      "regimes": 3,
-      "total": 3.17
+      "regimes": 2,
+      "total": 2.83
     },
     "gates": {
       "beats_buy_and_hold_sharpe": false,
@@ -295,11 +295,11 @@
     "by_market": {
       "ETH": {
         "count": 188,
-        "sum": 7.4
+        "sum": 13.64
       },
       "SOL": {
         "count": 73,
-        "sum": -3.2
+        "sum": -5.26
       }
     },
     "folds": [
@@ -331,7 +331,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01
+          "ETH": 0.016
         }
       },
       {
@@ -351,7 +351,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01
+          "ETH": 0.02
         }
       },
       {
@@ -362,7 +362,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01
+          "ETH": 0.016
         }
       },
       {
@@ -373,7 +373,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01
+          "ETH": 0.02
         }
       },
       {
@@ -384,7 +384,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01
+          "ETH": 0.02
         }
       },
       {
@@ -395,8 +395,8 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
@@ -407,8 +407,8 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "ETH": 0.02,
+          "SOL": 0.018
         }
       },
       {
@@ -419,8 +419,8 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "ETH": 0.02,
+          "SOL": 0.016
         }
       },
       {
@@ -431,7 +431,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
+          "ETH": 0.02,
           "SOL": 0.01
         }
       }
@@ -442,30 +442,30 @@
     ]
   },
   {
-    "name": "funding_reversion",
+    "name": "vol_breakout",
     "oos": {
-      "return_pct": 6.818,
-      "cagr_pct": 2.251,
-      "sharpe": 0.287,
-      "max_dd_pct": -9.393,
-      "trades": 84,
-      "win_rate_pct": 42.857,
-      "avg_R": 0.093,
-      "worst_losing_streak": 5,
-      "worst_month_pct": -2.891,
-      "worst_month": "2024-11"
+      "return_pct": 6.393,
+      "cagr_pct": 2.114,
+      "sharpe": 0.234,
+      "max_dd_pct": -43.542,
+      "trades": 616,
+      "win_rate_pct": 38.312,
+      "avg_R": 0.009,
+      "worst_losing_streak": 13,
+      "worst_month_pct": -21.153,
+      "worst_month": "2025-12"
     },
     "costs_doubled": {
-      "return_pct": 2.036,
-      "cagr_pct": 0.683,
-      "sharpe": 0.119,
-      "max_dd_pct": -14.403,
-      "trades": 90,
-      "win_rate_pct": 40.0,
-      "avg_R": 0.042,
-      "worst_losing_streak": 8,
-      "worst_month_pct": -3.158,
-      "worst_month": "2024-11"
+      "return_pct": -52.518,
+      "cagr_pct": -22.232,
+      "sharpe": -0.597,
+      "max_dd_pct": -60.045,
+      "trades": 579,
+      "win_rate_pct": 36.615,
+      "avg_R": -0.093,
+      "worst_losing_streak": 21,
+      "worst_month_pct": -26.258,
+      "worst_month": "2025-12"
     },
     "buy_and_hold": {
       "return_pct": 39.258,
@@ -477,45 +477,516 @@
       "worst_month": "2025-02"
     },
     "regime_sharpe": {
-      "bull": 0.13,
-      "bear": -1.28,
-      "chop": 1.02
+      "bull": -2.18,
+      "bear": 1.13,
+      "chop": 0.82
     },
     "monte_carlo": {
-      "p5_return_pct": -11.5,
-      "median_return_pct": 5.8,
-      "p95_max_dd_pct": -17.3,
-      "prob_loss_pct": 30.8
+      "p5_return_pct": -54.9,
+      "median_return_pct": 1.3,
+      "p95_max_dd_pct": -64.9,
+      "prob_loss_pct": 49.0
     },
     "score": {
       "profit": 2,
       "sharpe": 2,
-      "drawdown": 4,
-      "trades": 3,
-      "losing_streak": 4,
+      "drawdown": 1,
+      "trades": 5,
+      "losing_streak": 1,
       "regimes": 3,
-      "total": 3.0
+      "total": 2.33
     },
     "gates": {
       "beats_buy_and_hold_sharpe": false,
       "profitable_after_costs": true,
-      "profitable_with_costs_doubled": true,
+      "profitable_with_costs_doubled": false,
       "enough_trades": true
     },
     "passes": false,
-    "halts": 8,
+    "halts": 84,
     "by_market": {
       "BTC": {
-        "count": 22,
-        "sum": 2.26
+        "count": 213,
+        "sum": 12.67
       },
       "ETH": {
-        "count": 28,
-        "sum": -1.57
+        "count": 174,
+        "sum": -25.89
       },
       "SOL": {
-        "count": 34,
-        "sum": 6.13
+        "count": 229,
+        "sum": 19.61
+      }
+    },
+    "folds": [
+      {
+        "test_start": "2023-12-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 72,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "SOL": 0.01
+        }
+      },
+      {
+        "test_start": "2024-03-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 72,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.01,
+          "ETH": 0.006,
+          "SOL": 0.015
+        }
+      },
+      {
+        "test_start": "2024-06-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 72,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.007,
+          "ETH": 0.007,
+          "SOL": 0.007
+        }
+      },
+      {
+        "test_start": "2024-09-01",
+        "params": {
+          "ratio": 0.8,
+          "hold_h": 72,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.014,
+          "ETH": 0.02,
+          "SOL": 0.006
+        }
+      },
+      {
+        "test_start": "2024-12-01",
+        "params": {
+          "ratio": 0.8,
+          "hold_h": 72,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.016,
+          "ETH": 0.016
+        }
+      },
+      {
+        "test_start": "2025-03-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.006,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2025-06-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.015,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2025-09-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.017,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2025-12-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2026-03-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "ETH": 0.001,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2026-06-01",
+        "params": {
+          "ratio": 0.6,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "BTC": 0.016,
+          "ETH": 0.001,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2026-09-01",
+        "params": {
+          "ratio": 0.8,
+          "hold_h": 24,
+          "stop_atr": 3.0
+        },
+        "risk": {
+          "ETH": 0.013,
+          "SOL": 0.014
+        }
+      }
+    ],
+    "markets_traded": [
+      "BTC",
+      "ETH",
+      "SOL"
+    ]
+  },
+  {
+    "name": "trend_4h_time",
+    "oos": {
+      "return_pct": 8.639,
+      "cagr_pct": 2.837,
+      "sharpe": 0.241,
+      "max_dd_pct": -38.879,
+      "trades": 1085,
+      "win_rate_pct": 34.931,
+      "avg_R": 0.004,
+      "worst_losing_streak": 16,
+      "worst_month_pct": -12.821,
+      "worst_month": "2026-09"
+    },
+    "costs_doubled": {
+      "return_pct": -19.358,
+      "cagr_pct": -7.006,
+      "sharpe": -0.13,
+      "max_dd_pct": -44.149,
+      "trades": 982,
+      "win_rate_pct": 31.874,
+      "avg_R": -0.02,
+      "worst_losing_streak": 16,
+      "worst_month_pct": -11.898,
+      "worst_month": "2026-02"
+    },
+    "buy_and_hold": {
+      "return_pct": 67.792,
+      "cagr_pct": 19.091,
+      "sharpe": 0.609,
+      "max_dd_pct": -53.328,
+      "trades": 0,
+      "worst_month_pct": -21.586,
+      "worst_month": "2025-02"
+    },
+    "regime_sharpe": {
+      "bull": 0.18,
+      "bear": -0.55,
+      "chop": 0.45
+    },
+    "monte_carlo": {
+      "p5_return_pct": -47.9,
+      "median_return_pct": 3.1,
+      "p95_max_dd_pct": -58.1,
+      "prob_loss_pct": 46.9
+    },
+    "score": {
+      "profit": 2,
+      "sharpe": 2,
+      "drawdown": 1,
+      "trades": 5,
+      "losing_streak": 1,
+      "regimes": 3,
+      "total": 2.33
+    },
+    "gates": {
+      "beats_buy_and_hold_sharpe": false,
+      "profitable_after_costs": true,
+      "profitable_with_costs_doubled": false,
+      "enough_trades": true
+    },
+    "passes": false,
+    "halts": 128,
+    "by_market": {
+      "BTC": {
+        "count": 353,
+        "sum": -10.15
+      },
+      "ETH": {
+        "count": 289,
+        "sum": 31.42
+      },
+      "GOLD": {
+        "count": 56,
+        "sum": -6.73
+      },
+      "SOL": {
+        "count": 387,
+        "sum": -5.9
+      }
+    },
+    "folds": [
+      {
+        "test_start": "2023-12-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "max_hold_h": 240
+        },
+        "risk": {
+          "BTC": 0.017,
+          "SOL": 0.011
+        }
+      },
+      {
+        "test_start": "2024-03-01",
+        "params": {
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "max_hold_h": 240
+        },
+        "risk": {
+          "BTC": 0.006,
+          "SOL": 0.012
+        }
+      },
+      {
+        "test_start": "2024-06-01",
+        "params": {
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "max_hold_h": 240
+        },
+        "risk": {
+          "BTC": 0.006,
+          "SOL": 0.013
+        }
+      },
+      {
+        "test_start": "2024-09-01",
+        "params": {
+          "lookback_4h": 30,
+          "stop_atr": 8.0,
+          "max_hold_h": 240
+        },
+        "risk": {
+          "BTC": 0.02,
+          "ETH": 0.017,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2024-12-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "max_hold_h": 120
+        },
+        "risk": {
+          "BTC": 0.014,
+          "ETH": 0.015,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2025-03-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "max_hold_h": 120
+        },
+        "risk": {
+          "ETH": 0.02,
+          "SOL": 0.02,
+          "GOLD": 0.02
+        }
+      },
+      {
+        "test_start": "2025-06-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "max_hold_h": 120
+        },
+        "risk": {
+          "BTC": 0.011,
+          "ETH": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2025-09-01",
+        "params": {
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "max_hold_h": 120
+        },
+        "risk": {
+          "BTC": 0.0,
+          "ETH": 0.006,
+          "SOL": 0.019
+        }
+      },
+      {
+        "test_start": "2025-12-01",
+        "params": {
+          "lookback_4h": 60,
+          "stop_atr": 8.0,
+          "max_hold_h": 120
+        },
+        "risk": {
+          "BTC": 0.002,
+          "ETH": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2026-03-01",
+        "params": {
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "max_hold_h": 120
+        },
+        "risk": {
+          "BTC": 0.004,
+          "GOLD": 0.001
+        }
+      },
+      {
+        "test_start": "2026-06-01",
+        "params": {
+          "lookback_4h": 60,
+          "stop_atr": 4.0,
+          "max_hold_h": 120
+        },
+        "risk": {}
+      },
+      {
+        "test_start": "2026-09-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "max_hold_h": 240
+        },
+        "risk": {
+          "ETH": 0.003,
+          "SOL": 0.015,
+          "GOLD": 0.019
+        }
+      }
+    ],
+    "markets_traded": [
+      "BTC",
+      "ETH",
+      "GOLD",
+      "SOL"
+    ]
+  },
+  {
+    "name": "funding_reversion",
+    "oos": {
+      "return_pct": -17.496,
+      "cagr_pct": -6.286,
+      "sharpe": -0.242,
+      "max_dd_pct": -33.435,
+      "trades": 117,
+      "win_rate_pct": 35.897,
+      "avg_R": -0.058,
+      "worst_losing_streak": 8,
+      "worst_month_pct": -14.091,
+      "worst_month": "2024-09"
+    },
+    "costs_doubled": {
+      "return_pct": -29.662,
+      "cagr_pct": -11.2,
+      "sharpe": -0.507,
+      "max_dd_pct": -41.015,
+      "trades": 124,
+      "win_rate_pct": 33.871,
+      "avg_R": -0.109,
+      "worst_losing_streak": 8,
+      "worst_month_pct": -17.432,
+      "worst_month": "2024-09"
+    },
+    "buy_and_hold": {
+      "return_pct": 39.258,
+      "cagr_pct": 11.828,
+      "sharpe": 0.486,
+      "max_dd_pct": -65.419,
+      "trades": 0,
+      "worst_month_pct": -28.608,
+      "worst_month": "2025-02"
+    },
+    "regime_sharpe": {
+      "bull": -0.36,
+      "bear": -1.61,
+      "chop": 0.24
+    },
+    "monte_carlo": {
+      "p5_return_pct": -44.4,
+      "median_return_pct": -19.0,
+      "p95_max_dd_pct": -48.1,
+      "prob_loss_pct": 80.6
+    },
+    "score": {
+      "profit": 1,
+      "sharpe": 1,
+      "drawdown": 1,
+      "trades": 4,
+      "losing_streak": 3,
+      "regimes": 2,
+      "total": 2.0
+    },
+    "gates": {
+      "beats_buy_and_hold_sharpe": false,
+      "profitable_after_costs": false,
+      "profitable_with_costs_doubled": false,
+      "enough_trades": true
+    },
+    "passes": false,
+    "halts": 15,
+    "by_market": {
+      "BTC": {
+        "count": 36,
+        "sum": -6.96
+      },
+      "ETH": {
+        "count": 36,
+        "sum": -14.55
+      },
+      "SOL": {
+        "count": 45,
+        "sum": 4.01
       }
     },
     "folds": [
@@ -527,7 +998,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -538,9 +1009,9 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01,
-          "SOL": 0.01
+          "BTC": 0.02,
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
@@ -551,21 +1022,22 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01,
-          "SOL": 0.01
+          "BTC": 0.02,
+          "ETH": 0.018,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2024-09-01",
         "params": {
-          "z": 2.5,
+          "z": 1.5,
           "hold_h": 72,
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "BTC": 0.019,
+          "ETH": 0.018,
+          "SOL": 0.018
         }
       },
       {
@@ -576,7 +1048,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01
+          "ETH": 0.014
         }
       },
       {
@@ -616,7 +1088,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "BTC": 0.01
+          "BTC": 0.014
         }
       },
       {
@@ -654,30 +1126,30 @@
     ]
   },
   {
-    "name": "vol_breakout",
+    "name": "trend_4h_trail",
     "oos": {
-      "return_pct": 10.439,
-      "cagr_pct": 3.409,
-      "sharpe": 0.26,
-      "max_dd_pct": -31.047,
-      "trades": 620,
-      "win_rate_pct": 38.871,
-      "avg_R": 0.019,
-      "worst_losing_streak": 13,
-      "worst_month_pct": -11.618,
-      "worst_month": "2025-12"
+      "return_pct": -29.818,
+      "cagr_pct": -11.266,
+      "sharpe": -0.251,
+      "max_dd_pct": -60.892,
+      "trades": 937,
+      "win_rate_pct": 32.017,
+      "avg_R": -0.025,
+      "worst_losing_streak": 24,
+      "worst_month_pct": -37.48,
+      "worst_month": "2026-02"
     },
     "costs_doubled": {
-      "return_pct": -37.708,
-      "cagr_pct": -14.768,
-      "sharpe": -0.652,
-      "max_dd_pct": -46.115,
-      "trades": 593,
-      "win_rate_pct": 36.931,
-      "avg_R": -0.087,
-      "worst_losing_streak": 21,
-      "worst_month_pct": -14.088,
-      "worst_month": "2025-12"
+      "return_pct": -45.871,
+      "cagr_pct": -18.715,
+      "sharpe": -0.499,
+      "max_dd_pct": -71.14,
+      "trades": 951,
+      "win_rate_pct": 29.127,
+      "avg_R": -0.038,
+      "worst_losing_streak": 24,
+      "worst_month_pct": -39.96,
+      "worst_month": "2026-02"
     },
     "buy_and_hold": {
       "return_pct": 39.258,
@@ -689,194 +1161,191 @@
       "worst_month": "2025-02"
     },
     "regime_sharpe": {
-      "bull": -2.17,
-      "bear": 1.52,
-      "chop": 0.8
+      "bull": 0.42,
+      "bear": 0.23,
+      "chop": -0.6
     },
     "monte_carlo": {
-      "p5_return_pct": -34.4,
-      "median_return_pct": 7.7,
-      "p95_max_dd_pct": -45.6,
-      "prob_loss_pct": 40.8
+      "p5_return_pct": -65.8,
+      "median_return_pct": -33.9,
+      "p95_max_dd_pct": -69.5,
+      "prob_loss_pct": 83.4
     },
     "score": {
-      "profit": 2,
-      "sharpe": 2,
+      "profit": 1,
+      "sharpe": 1,
       "drawdown": 1,
       "trades": 5,
       "losing_streak": 1,
       "regimes": 3,
-      "total": 2.33
+      "total": 2.0
     },
     "gates": {
       "beats_buy_and_hold_sharpe": false,
-      "profitable_after_costs": true,
+      "profitable_after_costs": false,
       "profitable_with_costs_doubled": false,
       "enough_trades": true
     },
     "passes": false,
-    "halts": 88,
+    "halts": 121,
     "by_market": {
       "BTC": {
-        "count": 213,
-        "sum": 11.01
+        "count": 350,
+        "sum": -37.03
       },
       "ETH": {
-        "count": 177,
-        "sum": -17.22
+        "count": 321,
+        "sum": 20.69
       },
       "SOL": {
-        "count": 230,
-        "sum": 16.65
+        "count": 266,
+        "sum": -13.48
       }
     },
     "folds": [
       {
         "test_start": "2023-12-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 72,
-          "stop_atr": 3.0
+          "lookback_4h": 60,
+          "stop_atr": 4.0,
+          "trail_atr": 6.0
         },
-        "risk": {
-          "SOL": 0.01
-        }
+        "risk": {}
       },
       {
         "test_start": "2024-03-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 72,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "trail_atr": 6.0
         },
         "risk": {
-          "BTC": 0.009,
-          "ETH": 0.007,
-          "SOL": 0.01
+          "BTC": 0.015,
+          "ETH": 0.001
         }
       },
       {
         "test_start": "2024-06-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 72,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "trail_atr": 6.0
         },
         "risk": {
-          "BTC": 0.006,
-          "ETH": 0.008,
-          "SOL": 0.007
+          "BTC": 0.008,
+          "ETH": 0.011,
+          "SOL": 0.013
         }
       },
       {
         "test_start": "2024-09-01",
         "params": {
-          "ratio": 0.8,
-          "hold_h": 72,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "trail_atr": 6.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01,
-          "SOL": 0.005
+          "BTC": 0.002,
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2024-12-01",
         "params": {
-          "ratio": 0.8,
-          "hold_h": 72,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "trail_atr": 6.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01
+          "BTC": 0.015,
+          "ETH": 0.017,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2025-03-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "trail_atr": 4.0
         },
         "risk": {
-          "BTC": 0.006,
-          "SOL": 0.01
+          "BTC": 0.001,
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2025-06-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "trail_atr": 6.0
         },
         "risk": {
-          "BTC": 0.01,
-          "SOL": 0.01
+          "BTC": 0.008,
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2025-09-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "trail_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
-          "SOL": 0.01
+          "BTC": 0.017,
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2025-12-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "trail_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
-          "SOL": 0.01
+          "BTC": 0.015,
+          "ETH": 0.014,
+          "SOL": 0.02
         }
       },
       {
         "test_start": "2026-03-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 30,
+          "stop_atr": 4.0,
+          "trail_atr": 6.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.001,
-          "SOL": 0.01
+          "BTC": 0.005
         }
       },
       {
         "test_start": "2026-06-01",
         "params": {
-          "ratio": 0.6,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 60,
+          "stop_atr": 4.0,
+          "trail_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.001,
-          "SOL": 0.01
+          "ETH": 0.02
         }
       },
       {
         "test_start": "2026-09-01",
         "params": {
-          "ratio": 0.8,
-          "hold_h": 24,
-          "stop_atr": 3.0
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "trail_atr": 4.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "SOL": 0.004
         }
       }
     ],
@@ -887,29 +1356,274 @@
     ]
   },
   {
+    "name": "trend_4h_tp",
+    "oos": {
+      "return_pct": -13.449,
+      "cagr_pct": -4.759,
+      "sharpe": 0.013,
+      "max_dd_pct": -51.276,
+      "trades": 1269,
+      "win_rate_pct": 33.412,
+      "avg_R": -0.005,
+      "worst_losing_streak": 19,
+      "worst_month_pct": -33.275,
+      "worst_month": "2026-02"
+    },
+    "costs_doubled": {
+      "return_pct": -26.881,
+      "cagr_pct": -10.03,
+      "sharpe": -0.197,
+      "max_dd_pct": -62.299,
+      "trades": 1117,
+      "win_rate_pct": 30.707,
+      "avg_R": -0.011,
+      "worst_losing_streak": 18,
+      "worst_month_pct": -25.698,
+      "worst_month": "2026-02"
+    },
+    "buy_and_hold": {
+      "return_pct": 67.792,
+      "cagr_pct": 19.091,
+      "sharpe": 0.609,
+      "max_dd_pct": -53.328,
+      "trades": 0,
+      "worst_month_pct": -21.586,
+      "worst_month": "2025-02"
+    },
+    "regime_sharpe": {
+      "bull": 2.14,
+      "bear": -1.67,
+      "chop": -0.29
+    },
+    "monte_carlo": {
+      "p5_return_pct": -62.0,
+      "median_return_pct": -18.2,
+      "p95_max_dd_pct": -68.9,
+      "prob_loss_pct": 66.9
+    },
+    "score": {
+      "profit": 1,
+      "sharpe": 2,
+      "drawdown": 1,
+      "trades": 5,
+      "losing_streak": 1,
+      "regimes": 2,
+      "total": 2.0
+    },
+    "gates": {
+      "beats_buy_and_hold_sharpe": false,
+      "profitable_after_costs": false,
+      "profitable_with_costs_doubled": false,
+      "enough_trades": true
+    },
+    "passes": false,
+    "halts": 158,
+    "by_market": {
+      "BTC": {
+        "count": 415,
+        "sum": -23.52
+      },
+      "ETH": {
+        "count": 332,
+        "sum": 16.14
+      },
+      "GOLD": {
+        "count": 139,
+        "sum": -12.37
+      },
+      "SOL": {
+        "count": 383,
+        "sum": 6.31
+      }
+    },
+    "folds": [
+      {
+        "test_start": "2023-12-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "SOL": 0.014
+        }
+      },
+      {
+        "test_start": "2024-03-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2024-06-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2024-09-01",
+        "params": {
+          "lookback_4h": 30,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "ETH": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2024-12-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "tp_r": 2.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "SOL": 0.02
+        }
+      },
+      {
+        "test_start": "2025-03-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 4.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.005,
+          "ETH": 0.02,
+          "SOL": 0.02,
+          "GOLD": 0.02
+        }
+      },
+      {
+        "test_start": "2025-06-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "tp_r": 2.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "ETH": 0.02,
+          "SOL": 0.02,
+          "GOLD": 0.012
+        }
+      },
+      {
+        "test_start": "2025-09-01",
+        "params": {
+          "lookback_4h": 60,
+          "stop_atr": 4.0,
+          "tp_r": 2.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "ETH": 0.02,
+          "SOL": 0.02,
+          "GOLD": 0.01
+        }
+      },
+      {
+        "test_start": "2025-12-01",
+        "params": {
+          "lookback_4h": 60,
+          "stop_atr": 4.0,
+          "tp_r": 2.0
+        },
+        "risk": {
+          "BTC": 0.02,
+          "ETH": 0.018,
+          "SOL": 0.02,
+          "GOLD": 0.017
+        }
+      },
+      {
+        "test_start": "2026-03-01",
+        "params": {
+          "lookback_4h": 60,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.015,
+          "ETH": 0.02,
+          "SOL": 0.017
+        }
+      },
+      {
+        "test_start": "2026-06-01",
+        "params": {
+          "lookback_4h": 60,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "BTC": 0.013,
+          "ETH": 0.02,
+          "SOL": 0.006
+        }
+      },
+      {
+        "test_start": "2026-09-01",
+        "params": {
+          "lookback_4h": 120,
+          "stop_atr": 8.0,
+          "tp_r": 3.0
+        },
+        "risk": {
+          "SOL": 0.02,
+          "GOLD": 0.02
+        }
+      }
+    ],
+    "markets_traded": [
+      "BTC",
+      "ETH",
+      "GOLD",
+      "SOL"
+    ]
+  },
+  {
     "name": "liquidation_reversal",
     "oos": {
-      "return_pct": -9.574,
-      "cagr_pct": -3.34,
-      "sharpe": -0.797,
-      "max_dd_pct": -11.923,
+      "return_pct": -18.607,
+      "cagr_pct": -6.714,
+      "sharpe": -0.827,
+      "max_dd_pct": -22.736,
       "trades": 73,
       "win_rate_pct": 42.466,
       "avg_R": -0.134,
       "worst_losing_streak": 9,
-      "worst_month_pct": -3.255,
+      "worst_month_pct": -6.434,
       "worst_month": "2025-11"
     },
     "costs_doubled": {
-      "return_pct": -11.781,
-      "cagr_pct": -4.143,
-      "sharpe": -0.988,
-      "max_dd_pct": -13.635,
+      "return_pct": -22.366,
+      "cagr_pct": -8.191,
+      "sharpe": -1.016,
+      "max_dd_pct": -25.72,
       "trades": 73,
       "win_rate_pct": 42.466,
       "avg_R": -0.168,
       "worst_losing_streak": 9,
-      "worst_month_pct": -3.405,
+      "worst_month_pct": -6.726,
       "worst_month": "2025-11"
     },
     "buy_and_hold": {
@@ -923,23 +1637,23 @@
     },
     "regime_sharpe": {
       "bull": -1.1,
-      "bear": -3.93,
-      "chop": 0.45
+      "bear": -3.77,
+      "chop": 0.35
     },
     "monte_carlo": {
-      "p5_return_pct": -19.1,
-      "median_return_pct": -9.7,
-      "p95_max_dd_pct": -20.1,
-      "prob_loss_pct": 93.3
+      "p5_return_pct": -34.5,
+      "median_return_pct": -18.9,
+      "p95_max_dd_pct": -36.1,
+      "prob_loss_pct": 94.1
     },
     "score": {
       "profit": 1,
       "sharpe": 1,
-      "drawdown": 3,
+      "drawdown": 2,
       "trades": 3,
       "losing_streak": 2,
       "regimes": 2,
-      "total": 2.0
+      "total": 1.83
     },
     "gates": {
       "beats_buy_and_hold_sharpe": false,
@@ -952,11 +1666,11 @@
     "by_market": {
       "ETH": {
         "count": 13,
-        "sum": -4.38
+        "sum": -8.57
       },
       "SOL": {
         "count": 60,
-        "sum": -5.19
+        "sum": -10.03
       }
     },
     "folds": [
@@ -969,8 +1683,8 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
@@ -982,8 +1696,8 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "ETH": 0.01,
-          "SOL": 0.01
+          "ETH": 0.02,
+          "SOL": 0.02
         }
       },
       {
@@ -1027,7 +1741,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -1039,7 +1753,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -1051,7 +1765,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -1063,7 +1777,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -1097,7 +1811,7 @@
           "stop_atr": 3.0
         },
         "risk": {
-          "SOL": 0.01
+          "SOL": 0.012
         }
       }
     ],
@@ -1277,28 +1991,28 @@
   {
     "name": "pricer_gap",
     "oos": {
-      "return_pct": -30.22,
-      "cagr_pct": -11.438,
-      "sharpe": -0.727,
-      "max_dd_pct": -37.763,
-      "trades": 505,
-      "win_rate_pct": 43.168,
-      "avg_R": -0.09,
+      "return_pct": -46.46,
+      "cagr_pct": -19.015,
+      "sharpe": -0.674,
+      "max_dd_pct": -56.089,
+      "trades": 500,
+      "win_rate_pct": 43.4,
+      "avg_R": -0.094,
       "worst_losing_streak": 16,
-      "worst_month_pct": -9.071,
+      "worst_month_pct": -15.629,
       "worst_month": "2024-06"
     },
     "costs_doubled": {
-      "return_pct": -42.43,
-      "cagr_pct": -17.006,
-      "sharpe": -1.158,
-      "max_dd_pct": -48.204,
-      "trades": 489,
-      "win_rate_pct": 42.331,
-      "avg_R": -0.13,
+      "return_pct": -61.595,
+      "cagr_pct": -27.607,
+      "sharpe": -1.104,
+      "max_dd_pct": -68.088,
+      "trades": 473,
+      "win_rate_pct": 41.226,
+      "avg_R": -0.14,
       "worst_losing_streak": 16,
-      "worst_month_pct": -10.438,
-      "worst_month": "2024-12"
+      "worst_month_pct": -17.148,
+      "worst_month": "2024-06"
     },
     "buy_and_hold": {
       "return_pct": 39.258,
@@ -1310,15 +2024,15 @@
       "worst_month": "2025-02"
     },
     "regime_sharpe": {
-      "bull": -0.43,
-      "bear": -1.33,
-      "chop": -0.74
+      "bull": -0.26,
+      "bear": -1.32,
+      "chop": -0.73
     },
     "monte_carlo": {
-      "p5_return_pct": -50.6,
-      "median_return_pct": -31.4,
-      "p95_max_dd_pct": -53.0,
-      "prob_loss_pct": 96.9
+      "p5_return_pct": -70.9,
+      "median_return_pct": -48.7,
+      "p95_max_dd_pct": -73.2,
+      "prob_loss_pct": 96.5
     },
     "score": {
       "profit": 1,
@@ -1336,19 +2050,19 @@
       "enough_trades": true
     },
     "passes": false,
-    "halts": 54,
+    "halts": 53,
     "by_market": {
       "BTC": {
-        "count": 224,
-        "sum": -2.62
+        "count": 226,
+        "sum": -5.45
       },
       "ETH": {
-        "count": 160,
-        "sum": -12.15
+        "count": 161,
+        "sum": -14.73
       },
       "SOL": {
-        "count": 121,
-        "sum": -15.44
+        "count": 113,
+        "sum": -26.28
       }
     },
     "folds": [
@@ -1369,8 +2083,8 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01
+          "BTC": 0.02,
+          "ETH": 0.02
         }
       },
       {
@@ -1381,9 +2095,9 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
+          "BTC": 0.02,
           "ETH": 0.01,
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -1394,9 +2108,9 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
+          "BTC": 0.02,
           "ETH": 0.009,
-          "SOL": 0.01
+          "SOL": 0.02
         }
       },
       {
@@ -1407,9 +2121,9 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
-          "ETH": 0.01,
-          "SOL": 0.01
+          "BTC": 0.02,
+          "ETH": 0.014,
+          "SOL": 0.02
         }
       },
       {
@@ -1420,7 +2134,7 @@
           "stop_atr": 4.0
         },
         "risk": {
-          "BTC": 0.01,
+          "BTC": 0.02,
           "ETH": 0.007
         }
       },

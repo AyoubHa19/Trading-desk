@@ -64,6 +64,16 @@ STRATEGIES["pricer_gap"] = {
 }
 
 
+# ---- exit variants of trend_4h: same entries, different ways out ----
+for _name, _extra, _idea in [
+    ("trend_4h_trail", {"trail_atr": [4.0, 6.0]}, "Same trend entries; a trailing stop follows the best price to lock in profit."),
+    ("trend_4h_tp", {"tp_r": [2.0, 3.0]}, "Same trend entries; take the profit at 2R or 3R."),
+    ("trend_4h_time", {"max_hold_h": [24 * 5, 24 * 10]}, "Same trend entries; close any trade after 5 or 10 days."),
+]:
+    STRATEGIES[_name] = dict(STRATEGIES["trend_4h"], idea=_idea,
+                             grid=grid(lookback_4h=[30, 60, 120], stop_atr=[4.0, 8.0], **_extra))
+
+
 def folds():
     t = OOS_START
     while t < OOS_END:
@@ -76,9 +86,14 @@ def targets_for(name, params, markets):
     return {m: s["fn"](DATA[m], FEATS[m], market=m, **params) for m in markets}
 
 
+def exits_of(p):
+    return {k: p.get(k) for k in ("trail_atr", "tp_r", "max_hold_h")}
+
+
 def single(name, params, m, start, end, risk=C.RISK_PER_TRADE, cost_mult=1.0):
     tg = targets_for(name, params, [m])
-    return engine.run(DATA, FEATS, tg, {m: params["stop_atr"]}, {m: risk}, start, end, cost_mult=cost_mult)
+    return engine.run(DATA, FEATS, tg, {m: params["stop_atr"]}, {m: risk}, start, end, cost_mult=cost_mult,
+                      exits=exits_of(params))
 
 
 def choose(name, tr0, tr1):
@@ -115,7 +130,7 @@ def walk_forward(name, cost_mult=1.0, fixed=None):
         if risk:
             tg = targets_for(name, p, list(risk))
             res = engine.run(DATA, FEATS, tg, {m: p["stop_atr"] for m in risk}, risk, te0, te1,
-                             start_equity=equity, cost_mult=cost_mult)
+                             start_equity=equity, cost_mult=cost_mult, exits=exits_of(p))
             eq_parts.append(res.equity)
             trades.append(res.trades)
             halts += res.halts

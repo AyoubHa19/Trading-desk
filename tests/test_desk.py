@@ -47,13 +47,14 @@ def test_position_size_caps():
 def test_day_guard_loss_and_streak():
     g = DayGuard()
     g.new_bar("2026-01-01", 100.0)
-    assert not g.check(97.5, "t1")
-    assert g.check(96.9, "t2") and "daily loss" in g.reason
-    g.new_bar("2026-01-02", 96.9)                             # new NY day resets
+    limit = 100 * (1 - C.DAILY_LOSS_STOP)
+    assert not g.check(limit + 0.5, "t1")
+    assert g.check(limit - 0.1, "t2") and "daily loss" in g.reason
+    g.new_bar("2026-01-02", limit - 0.1)                      # new NY day resets
     assert not g.halted
     for _ in range(3):
         g.record_trade(-0.1)
-    assert g.check(96.8, "t3") and "losing" in g.reason
+    assert g.check(limit - 0.2, "t3") and "losing" in g.reason
 
 
 def test_data_checks():
@@ -146,3 +147,25 @@ def test_bot_replays_exactly_like_the_backtest():
     assert len(bt) == len(live_trades) > 0
     assert np.allclose(bt["pnl"].values, live_trades["pnl"].values)
     assert list(bt["market"]) == list(live_trades["market"])
+
+
+def test_trailing_stop_locks_profit():
+    up = _toy(n=120, drift=0.004)
+    down = _toy(n=120, drift=-0.004)
+    df = pd.concat([up, down.assign(**{c: down[c] * up["close"].iloc[-1] / 100 for c in ["open", "high", "low", "close"]})
+                    .set_axis(pd.date_range(up.index[-1] + pd.Timedelta(hours=1), periods=120, freq="1h", tz="UTC"))])
+    data, feats = {"BTC": df}, {"BTC": add_features(df)}
+    tgt = {"BTC": pd.Series(1.0, index=df.index)}
+    res = engine.run(data, feats, tgt, {"BTC": 8.0}, {"BTC": 0.01}, df.index[30], df.index[-1], exits={"trail_atr": 3.0})
+    t = res.trades.iloc[0]
+    assert t["reason"] == "trail" and t["pnl"] > 0               # rode the rise, kept a profit on the fall
+
+
+def test_take_profit_and_time_limit():
+    df = _toy(n=300, drift=0.002)
+    data, feats = {"BTC": df}, {"BTC": add_features(df)}
+    tgt = {"BTC": pd.Series(1.0, index=df.index)}
+    tp = engine.run(data, feats, tgt, {"BTC": 3.0}, {"BTC": 0.01}, df.index[30], df.index[-1], exits={"tp_r": 2.0})
+    assert tp.trades.iloc[0]["reason"] == "take profit" and abs(tp.trades.iloc[0]["R"] - 2.0) < 0.3
+    tl = engine.run(data, feats, tgt, {"BTC": 3.0}, {"BTC": 0.01}, df.index[30], df.index[-1], exits={"max_hold_h": 24})
+    assert tl.trades.iloc[0]["reason"] == "time limit"

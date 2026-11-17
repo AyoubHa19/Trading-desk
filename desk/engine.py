@@ -36,8 +36,11 @@ def cost_rate(market: str, mult: float = 1.0) -> float:
 
 
 class Book:
-    def __init__(self, markets, equity=C.START_CAPITAL, cost_mult=1.0):
+    def __init__(self, markets, equity=C.START_CAPITAL, cost_mult=1.0, exits=None):
         self.markets = list(markets)
+        # Optional exits on top of signal/stop: trail_atr (trailing stop distance in ATRs),
+        # tp_r (take profit at this many R), max_hold_h (close after this many hours).
+        self.exits = {k: v for k, v in (exits or {}).items() if v}
         self.cost = {m: cost_rate(m, cost_mult) for m in self.markets}
         self.theme = {m: C.MARKETS[m]["theme"] for m in self.markets}
         self.realized = float(equity)
@@ -100,7 +103,8 @@ class Book:
                     cost = units * entry * self.cost[m]
                     self.realized -= cost
                     self.pos[m] = {"units": want * units, "entry": entry, "risk": risk_amt, "t": t,
-                                   "stop": entry - want * stop_dist, "entry_cost": cost, "funding": 0.0}
+                                   "stop": entry - want * stop_dist, "entry_cost": cost, "funding": 0.0,
+                                   "stop_dist0": stop_dist, "best": entry, "bars": 0}
                     if why and why.get(m):
                         self.pos[m]["why"] = dict(why[m], stop_atr=stop_atr[m], atr=atr, risk_pct=100 * risk_frac[m])
 
@@ -111,17 +115,39 @@ class Book:
                 self.realized += pay
                 p["funding"] += pay
 
-    def close_bar(self, t, highs, lows, closes, opens) -> float:
+    def close_bar(self, t, highs, lows, closes, opens, atrs=None) -> float:
+        ex = self.exits
         for m in self.markets:          # stops; a gap through the stop fills at the (worse) open
             p = self.pos[m]
             if not p:
                 continue
-            if p["units"] > 0 and lows[m] <= p["stop"]:
+            d = 1 if p["units"] > 0 else -1
+            if d > 0 and lows[m] <= p["stop"]:
                 self.blocked[m] = 1
-                self._close(m, t, min(opens[m], p["stop"]), "stop")
-            elif p["units"] < 0 and highs[m] >= p["stop"]:
+                self._close(m, t, min(opens[m], p["stop"]), "trail" if p.get("trailed") else "stop")
+                continue
+            if d < 0 and highs[m] >= p["stop"]:
                 self.blocked[m] = -1
-                self._close(m, t, max(opens[m], p["stop"]), "stop")
+                self._close(m, t, max(opens[m], p["stop"]), "trail" if p.get("trailed") else "stop")
+                continue
+            if "tp_r" in ex and p.get("stop_dist0"):        # take profit (checked after the stop: conservative)
+                target = p["entry"] + d * ex["tp_r"] * p["stop_dist0"]
+                if (d > 0 and highs[m] >= target) or (d < 0 and lows[m] <= target):
+                    self.blocked[m] = d                      # don't jump straight back in
+                    self._close(m, t, max(opens[m], target) if d > 0 else min(opens[m], target), "take profit")
+                    continue
+            p["bars"] = p.get("bars", 0) + 1
+            if "max_hold_h" in ex and p["bars"] >= ex["max_hold_h"]:
+                self.blocked[m] = d
+                self._close(m, t, closes[m], "time limit")
+                continue
+            if "trail_atr" in ex and atrs and atrs.get(m) and not math.isnan(atrs[m]):
+                # Chandelier trailing stop: best price since entry minus k ATR; it only moves in our favour.
+                p["best"] = max(p.get("best", p["entry"]), highs[m]) if d > 0 else min(p.get("best", p["entry"]), lows[m])
+                new = p["best"] - d * ex["trail_atr"] * atrs[m]
+                moved = max(p["stop"], new) if d > 0 else min(p["stop"], new)
+                if moved != p["stop"]:
+                    p["stop"], p["trailed"] = moved, True
         eq = self.equity(closes)
         if not self._halted_at_open and self.guard.check(eq, t):
             self.close_all(t, closes, "halt")
@@ -131,18 +157,19 @@ class Book:
     # ------------------------------------------------------------ save/load (bot)
     def to_dict(self):
         return {"markets": self.markets, "realized": self.realized, "pos": self.pos, "blocked": self.blocked,
+                "exits": self.exits,
                 "guard": asdict(self.guard), "trades": self.trades, "cost": self.cost}
 
     @classmethod
     def from_dict(cls, d):
-        b = cls(d["markets"], d["realized"])
+        b = cls(d["markets"], d["realized"], exits=d.get("exits"))
         b.cost, b.pos, b.blocked, b.trades = d["cost"], d["pos"], d["blocked"], d["trades"]
         b.guard = DayGuard(**d["guard"])
         return b
 
 
 def run(data, feats, targets, stop_atr, risk_frac, start, end,
-        start_equity=C.START_CAPITAL, cost_mult=1.0) -> Result:
+        start_equity=C.START_CAPITAL, cost_mult=1.0, exits=None) -> Result:
     """Backtest. targets: {market: Series of -1/0/1}; stop_atr / risk_frac: {market: float}."""
     markets = list(targets)
     idx = data["BTC"].loc[start:end].index
@@ -160,14 +187,14 @@ def run(data, feats, targets, stop_atr, risk_frac, start, end,
                 "atr": f["atr"].tolist(), "qv": f["quote_vol_24h"].tolist(),
                 "tgt": targets[m].reindex(idx).fillna(0.0).tolist()}
 
-    book = Book(markets, start_equity, cost_mult)
+    book = Book(markets, start_equity, cost_mult, exits)
     eq_curve = [float(start_equity)]
     for i in range(1, len(idx)):
         col = lambda k, j=i: {m: A[m][k][j] for m in markets}  # noqa: E731
         decisions = {m: (A[m]["tgt"][i - 1], A[m]["atr"][i - 1], A[m]["qv"][i - 1]) for m in markets}
         opens = col("o")
         book.open_bar(idx[i], ny_day[i], opens, col("fund"), decisions, col("c", i - 1), stop_atr, risk_frac)
-        eq_curve.append(book.close_bar(idx[i], col("h"), col("l"), col("c"), opens))
+        eq_curve.append(book.close_bar(idx[i], col("h"), col("l"), col("c"), opens, col("atr")))
 
     # End of the window: close what is still open so every trade is counted
     # (and paid for) inside the window it belongs to.

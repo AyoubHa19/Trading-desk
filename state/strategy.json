@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-11-17 11:52:48+00:00",
+  "generated_utc": "2026-11-17 15:21:08+00:00",
   "trained_through_utc": "2026-11-16 23:00:00+00:00",
   "ledgers": {
     "champion": {
@@ -10,9 +10,9 @@
       },
       "risk": {
         "BTC": 0.007,
-        "ETH": 0.01,
-        "SOL": 0.01,
-        "GOLD": 0.01
+        "ETH": 0.017,
+        "SOL": 0.016,
+        "GOLD": 0.017
       },
       "markets": [
         "BTC",
@@ -21,8 +21,7 @@
         "SOL"
       ],
       "passed_gates": true,
-      "score": 3.17
+      "score": 2.83
     }
-  },
-  "note": "Owner's choice 2026-11-17: champion only, no challengers."
+  }
 }

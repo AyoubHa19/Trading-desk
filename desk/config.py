@@ -33,10 +33,10 @@ COSTS = {
 
 # ---- Money and risk (from the owner's answers) ----
 START_CAPITAL = 100.0          # USD, paper
-RISK_PER_TRADE = 0.01          # max 1% of equity at risk per trade
+RISK_PER_TRADE = 0.02          # max 2% of equity at risk per trade (owner raised from 1%, 2026-11-17)
 RISK_PER_THEME = 0.05          # max 5% per theme (BTC/ETH/SOL count as one bet)
 KELLY_FRACTION = 0.25          # quarter Kelly
-DAILY_LOSS_STOP = 0.03         # stop for the day after -3% (New York day)
+DAILY_LOSS_STOP = 0.05         # stop for the day after -5% (New York day; owner raised from 3%, 2026-11-17)
 MAX_LOSING_STREAK = 3          # stop for the day after 3 losing trades in a row
 MAX_LEVERAGE = 3.0             # hard cap on notional / equity
 MIN_ORDER_USD = 5.0            # below this the exchange rejects the order

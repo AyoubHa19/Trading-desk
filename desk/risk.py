@@ -15,8 +15,8 @@ def kelly_risk(r_multiples: list[float]) -> float:
     """Fraction of equity to RISK per trade, from past trade results in R.
 
     R = trade P&L / amount risked. Growth-optimal (Kelly) risk is about
-    mean(R) / mean(R^2). We use a quarter of it and never more than 1%.
-    No edge (mean <= 0) or too few trades -> 0, i.e. do not trade.
+    mean(R) / mean(R^2). We use a quarter of it.
+    Capped at RISK_PER_TRADE. No edge (mean <= 0) or too few trades -> 0, i.e. do not trade.
     """
     if len(r_multiples) < 20:
         return 0.0

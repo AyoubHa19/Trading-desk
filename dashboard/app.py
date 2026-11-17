@@ -67,6 +67,41 @@ def live_price(market: str):
     return (1 / p if inst == "USDT-EUR" else p), pd.Timestamp.now(tz="UTC")
 
 
+@st.cache_data(ttl=60, show_spinner=False)
+def exit_level(market: str, lookback_4h: int):
+    """Price that flips the 20-day trend at the next 4h close, and when that close is.
+
+    trend_4h compares each completed 4h close with the 4h close `lookback_4h` bars earlier.
+    At the next 4h close the reference will be today's c4[-lookback], so that price is the line.
+    """
+    inst = C.MARKETS[market]["okx"]
+    df = okx.candles_1h(inst, 4 * lookback_4h + 48)
+    done = df[df["confirmed"]]
+    c4 = done["close"][done.index.hour % 4 == 3]          # closes of 4h blocks (UTC 00-04, 04-08, ...)
+    if len(c4) < lookback_4h:
+        return None, None
+    level = float(c4.iloc[-lookback_4h])
+    next_close = c4.index[-1] + pd.Timedelta(hours=5)    # bar opened 03:00 closes 04:00; next block ends 4h later
+    if inst == "USDT-EUR":
+        level = 1 / level
+    return level, next_close
+
+
+def plan_text(m, p, champ):
+    side = "SHORT" if p["units"] < 0 else "LONG"
+    try:
+        level, when = exit_level(m, champ["params"]["lookback_4h"])
+    except Exception:
+        level, when = None, None
+    flip = (f"الثمن ديال الإغلاق ديال 4 ساعات يكون <b>{'فوق' if side == 'SHORT' else 'تحت'} {price(level)}</b> "
+            f"(أول شيك: {when:%H:%M} UTC، ومن بعد كل 4 ساعات؛ هاد الخط كيتبدل شوية بشوية)") if level else "الاتجاه ديال 20 يوم يتقلب"
+    return (f"<b>خطة الخروج:</b> كيتسد بوحدو ملي يوقع واحد من هادو:<br>"
+            f"① {flip}.<br>"
+            f"② الثمن يضرب الـ stop {price(p['stop'])} (الخسارة كتكون تقريبا {money(p['risk'])}).<br>"
+            f"③ Risk يوقف النهار: خسارة {C.DAILY_LOSS_STOP:.0%} ولا {C.MAX_LOSING_STREAK} خسارات متتابعة.<br>"
+            f"ما كاينش take-profit: جربناه فالـ backtest وكان كيقتل الربح (+72% بلاه، -13% بيه).")
+
+
 def why_text(m, p):
     w = p.get("why") or {}
     side = "SHORT" if p["units"] < 0 else "LONG"
@@ -80,8 +115,8 @@ def why_text(m, p):
             f"(من {price(w['price_then'])} نهار {then} حتى {price(w['price_now'])}). "
             f"الـ strategy <b>trend_4h</b> كتبع الاتجاه ديال 20 يوم: إلا الثمن {move}، كندخلو <b>{side}</b>.<br>"
             f"<b>الـ stop:</b> 8 × ATR (الحركة العادية ف ساعة = {price(w['atr'])}) = {price(dist)} "
-            f"{'فوق' if side == 'SHORT' else 'تحت'} الدخول. <b>الخطر:</b> {w['risk_pct']:.1f}% من الرأسمال، يعني ما تخسرش أكثر من {money(p['risk'])} إلا ضرب الـ stop.<br>"
-            f"<b>كيتسد ملي:</b> الاتجاه ديال 20 يوم كيتقلب، ولا يضرب الـ stop، ولا Risk يوقف النهار (-3% ولا 3 خسارات متتابعة)."
+            f"{'فوق' if side == 'SHORT' else 'تحت'} الدخول. <b>الخطر:</b> {w['risk_pct']:.1f}% من الرأسمال، يعني ما تخسرش أكثر من {money(p['risk'])} إلا ضرب الـ stop "
+            f"(الحجم كيتحسب بـ ربع Kelly، والحد الأقصى {C.RISK_PER_TRADE:.0%})."
         )
     return "<b>علاش تحل؟</b> ما تسجلش السبب ديال هاد الـ trade."
 
@@ -147,6 +182,7 @@ def screen():
   </div>
   <div class="bar" title="شحال تخسر من الخطر"><i style="width:{used:.0f}%"></i></div>
   <div class="why">{why_text(m, p)}</div>
+  <div class="why">{plan_text(m, p, champ)}</div>
 </div>""", unsafe_allow_html=True)
 
     st.subheader("الـ trades المسدودين")

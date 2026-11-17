@@ -77,14 +77,16 @@ def step_ledger(role, cfg, led, data, feats, live_px, now):
 
     # New or changed strategy config: close the old book at live prices, keep the money.
     if not led or led.get("config") != cfg:
-        equity = C.START_CAPITAL
+        equity, history = C.START_CAPITAL, []
         if led:
             old = Book.from_dict(led["book"])
             px = {m: live_px.get(m, data[m]["close"].iloc[-1]) for m in old.markets}
             old.close_all(str(now), px, "config change")
             equity = old.realized
+            history = old.trades
             notes.append(f"{role}: config changed, old positions closed, equity carried {equity:.2f}")
-        led = {"config": cfg, "book": Book(markets, equity).to_dict(), "closed_through": None,
+        led = {"config": cfg, "book": dict(Book(markets, equity, exits={k: params.get(k) for k in ("trail_atr", "tp_r", "max_hold_h")}).to_dict(),
+                             trades=history), "closed_through": None,
                "opened_bar": None, "live_open": {}}
 
     book = Book.from_dict(led["book"])
@@ -115,7 +117,8 @@ def step_ledger(role, cfg, led, data, feats, live_px, now):
             book.open_bar(str(t), ny, opens, {m: float(data[m].get("funding", pd.Series()).get(t, 0.0)) for m in markets},
                           decisions(t), {m: bar(m, prev, "close") for m in markets}, stop_atr, cfg["risk"])
         eq = book.close_bar(str(t), {m: bar(m, t, "high") for m in markets}, {m: bar(m, t, "low") for m in markets},
-                            {m: bar(m, t, "close") for m in markets}, opens)
+                            {m: bar(m, t, "close") for m in markets}, opens,
+                            {m: float(feats[m]["atr"].get(t, float("nan"))) for m in markets})
         rows.append([str(t), role, cfg["name"], round(eq, 4)])
         led["closed_through"] = str(t)
 
