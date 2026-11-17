@@ -62,7 +62,9 @@ def main():
            "slippage (estimated) and funding. Source data: data.binance.vision (see data/manifest.csv), cross-checked with OKX.",
            "Buy & hold = equal-weight hold of the same markets over the same period.", ""]
     for r in results:
-        s, j, o, bh = STRATEGIES[r["name"]], JUDGEMENT[r["name"]], r["oos"], r["buy_and_hold"]
+        s, o, bh = STRATEGIES[r["name"]], r["oos"], r["buy_and_hold"]
+        j = JUDGEMENT.get(r["name"], {"breaks_in": "Same as trend_4h.", "fading_sign": "Same as trend_4h.",
+                                      "fail": "Closing trend trades early cut off the few big moves that pay for all the small losses."})
         role = roles.get(r["name"], "rejected" if not r["passes"] else "standby")
         last = r["folds"][-1]
         out += [
