@@ -1,6 +1,6 @@
 name: paper-bot
 
-# Runs the PAPER bot a few minutes after every hour. No API keys, no real orders.
+# Runs the PAPER bot a few minutes after every hour (UTC). No API keys, no real orders.
 on:
   schedule:
     - cron: "4 * * * *"
