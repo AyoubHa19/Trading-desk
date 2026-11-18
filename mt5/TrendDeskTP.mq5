@@ -23,6 +23,7 @@ input ENUM_TIMEFRAMES InpATRTF   = PERIOD_H1; // Bars used for the ATR / stop (t
 input int    InpLookbackH4      = 120;    // Trend lookback in InpTrendTF bars (120 x H4 = 20 days)
 input double InpStopATR         = 8.0;    // Stop distance in ATRs
 input double InpTakeProfitATR   = 0.0;    // Take profit distance in ATRs (0 = no take profit, as tested)
+input bool   InpReenterAfterTP  = true;   // After a take profit, enter again at the next check if the trend still says so
 input int    InpATRBars         = 24;     // ATR length in InpATRTF bars
 input double InpThemeRiskPct    = 5.0;    // Max total risk of the theme symbols, % of equity
 input double InpMaxLeverage     = 3.0;    // Max total position value / equity
@@ -456,7 +457,7 @@ void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest 
    g_streak = (pnl < 0) ? g_streak + 1 : 0;
 
    long reason = HistoryDealGetInteger(trans.deal, DEAL_REASON);
-   if(reason == DEAL_REASON_SL || reason == DEAL_REASON_TP)   // after a stop or a take profit: wait for a new signal
+   if(reason == DEAL_REASON_SL || (reason == DEAL_REASON_TP && !InpReenterAfterTP))   // wait for a new signal
    {
       int idx = SymIndex(HistoryDealGetString(trans.deal, DEAL_SYMBOL));
       // a SELL deal closes a LONG position, a BUY deal closes a SHORT one
@@ -464,6 +465,8 @@ void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest 
       PrintFormat("%s hit on %s, pnl %.2f", reason == DEAL_REASON_TP ? "TAKE PROFIT" : "STOP",
                   HistoryDealGetString(trans.deal, DEAL_SYMBOL), pnl);
    }
+   if(reason == DEAL_REASON_TP && InpReenterAfterTP)
+      PrintFormat("TAKE PROFIT hit on %s, pnl %.2f -> may re-enter at the next check", HistoryDealGetString(trans.deal, DEAL_SYMBOL), pnl);
    SaveState();
 }
 //+------------------------------------------------------------------+
