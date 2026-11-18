@@ -5,7 +5,7 @@
 //| desk/risk.py, desk/engine.py). DEMO ACCOUNTS ONLY by default.    |
 //+------------------------------------------------------------------+
 #property copyright "Trading desk (demo)"
-#property version   "1.10"
+#property version   "1.20"
 #property description "Trend 20 days (H4 close vs 120 H4 bars ago), stop 8x ATR(24 H1),"
 #property description "2% risk per trade, -5% or 3 losses = stop the New York day,"
 #property description "optional +2% profit lock. Demo accounts only unless you change InpDemoOnly."
@@ -22,6 +22,7 @@ input ENUM_TIMEFRAMES InpTrendTF = PERIOD_H4; // Bars used for the trend (tested
 input ENUM_TIMEFRAMES InpATRTF   = PERIOD_H1; // Bars used for the ATR / stop (tested: H1)
 input int    InpLookbackH4      = 120;    // Trend lookback in InpTrendTF bars (120 x H4 = 20 days)
 input double InpStopATR         = 8.0;    // Stop distance in ATRs
+input double InpTakeProfitATR   = 0.0;    // Take profit distance in ATRs (0 = no take profit, as tested)
 input int    InpATRBars         = 24;     // ATR length in InpATRTF bars
 input double InpThemeRiskPct    = 5.0;    // Max total risk of the theme symbols, % of equity
 input double InpMaxLeverage     = 3.0;    // Max total position value / equity
@@ -321,10 +322,13 @@ void Hourly()
 
       int digits = (int)SymbolInfoInteger(s, SYMBOL_DIGITS);
       double sl = NormalizeDouble(want > 0 ? price - stopDist : price + stopDist, digits);
+      double tp = 0;
+      if(InpTakeProfitATR > 0)
+         tp = NormalizeDouble(want > 0 ? price + InpTakeProfitATR * atr : price - InpTakeProfitATR * atr, digits);
       string why = StringFormat("TD %s 20d %+.1f%%", want > 0 ? "LONG" : "SHORT", 100.0 * (now / then - 1.0));
       g_trade.SetTypeFillingBySymbol(s);
       // Buy/Sell(volume, symbol, price (0 = market), stop loss, take profit (0 = none), comment)
-      bool ok = (want > 0) ? g_trade.Buy(lots, s, 0, sl, 0, why) : g_trade.Sell(lots, s, 0, sl, 0, why);
+      bool ok = (want > 0) ? g_trade.Buy(lots, s, 0, sl, tp, why) : g_trade.Sell(lots, s, 0, sl, tp, why);
       if(ok)
          PrintFormat("OPEN %s %s %.2f lots @ %.5f, stop %.5f (%.1f ATR), risk %.2f. Why: price %.5f vs %.5f 20 days ago (%+.1f%%)",
                      want > 0 ? "LONG" : "SHORT", s, lots, price, sl, InpStopATR, lots * stopDist * vpu, now, then, 100.0 * (now / then - 1.0));
