@@ -70,6 +70,9 @@ for _name, _extra, _idea in [
     ("trend_4h_tp", {"tp_r": [2.0, 3.0]}, "Same trend entries; take the profit at 2R or 3R."),
     ("trend_4h_time", {"max_hold_h": [24 * 5, 24 * 10]}, "Same trend entries; close any trade after 5 or 10 days."),
     ("trend_4h_be", {"be_r": [1.0, 2.0]}, "Same trend entries; once 1R or 2R in profit, the stop moves to breakeven."),
+    ("trend_4h_lock", {"profit_lock": [0.01, 0.02, 0.03]},
+     "Same trend entries; once the day is up 1-3%, close everything and stop until tomorrow."),
+    ("trend_4h_dayflat", {"day_flat": [1]}, "Same trend entries; close everything at the end of every New York day."),
     ("trend_4h_partial", {"partial_r": [1.0, 2.0], "partial_frac": [0.5]},
      "Same trend entries; take half the profit at 1R or 2R, stop to breakeven, let the rest run."),
 ]:
@@ -90,7 +93,8 @@ def targets_for(name, params, markets):
 
 
 def exits_of(p):
-    return {k: p.get(k) for k in ("trail_atr", "tp_r", "max_hold_h", "be_r", "partial_r", "partial_frac")}
+    return {k: p.get(k) for k in ("trail_atr", "tp_r", "max_hold_h", "be_r", "partial_r", "partial_frac",
+                                  "profit_lock", "day_flat")}
 
 
 def single(name, params, m, start, end, risk=C.RISK_PER_TRADE, cost_mult=1.0):

@@ -179,6 +179,16 @@ class Book:
         if not self._halted_at_open and self.guard.check(eq, t):
             self.close_all(t, closes, "halt")
             eq = self.realized
+        elif not self.guard.halted and "profit_lock" in ex and eq >= self.guard.day_start_equity * (1 + ex["profit_lock"]):
+            # Good day: bank everything and stop until the next New York day.
+            self.guard.halted, self.guard.reason = True, f"profit lock +{eq / self.guard.day_start_equity - 1:.2%}"
+            self.guard.log.append((str(t), self.guard.reason))
+            self.close_all(t, closes, "profit lock")
+            eq = self.realized
+        elif "day_flat" in ex and pd.Timestamp(t).tz_convert(C.TIMEZONE).hour == 23:
+            # Last hour of the New York day: close everything; the next day starts flat.
+            self.close_all(t, closes, "day end")
+            eq = self.realized
         return eq
 
     # ------------------------------------------------------------ save/load (bot)
