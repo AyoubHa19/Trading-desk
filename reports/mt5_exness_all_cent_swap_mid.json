@@ -1,0 +1,631 @@
+{
+  "trend_4h": {
+    "passes": true,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "True",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "True",
+      "enough_trades": true
+    },
+    "score": 3.17,
+    "return_pct": 43.7,
+    "sharpe": 0.7,
+    "max_dd_pct": -23.9,
+    "trades": 916,
+    "costs_x2_return_pct": 19.3,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 13.5,
+    "regimes": {
+      "bull": 1.3,
+      "bear": 2.34,
+      "chop": 0.03
+    },
+    "by_market": {
+      "BTC": {
+        "count": 304,
+        "sum": 8.6
+      },
+      "ETH": {
+        "count": 304,
+        "sum": -5.92
+      },
+      "EUR": {
+        "count": 23,
+        "sum": -2.46
+      },
+      "GOLD": {
+        "count": 285,
+        "sum": 43.49
+      }
+    },
+    "skipped_min_lot_pct": 8.8,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 120,
+        "stop_atr": 4.0
+      },
+      "risk": {
+        "ETH": 0.006872211355717529,
+        "GOLD": 0.005691469378712503
+      }
+    }
+  },
+  "funding_reversion": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "False",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 1.83,
+    "return_pct": -27.2,
+    "sharpe": -0.92,
+    "max_dd_pct": -32.2,
+    "trades": 118,
+    "costs_x2_return_pct": -29.1,
+    "hold_sharpe": 0.43,
+    "mc_prob_loss_pct": 98.7,
+    "regimes": {
+      "bull": -1.02,
+      "bear": -2.38,
+      "chop": -0.61
+    },
+    "by_market": {
+      "BTC": {
+        "count": 69,
+        "sum": -19.76
+      },
+      "ETH": {
+        "count": 49,
+        "sum": -7.43
+      }
+    },
+    "skipped_min_lot_pct": 0.0,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "z": 2.5,
+        "hold_h": 72,
+        "stop_atr": 3.0
+      },
+      "risk": {}
+    }
+  },
+  "liquidation_reversal": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "False",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": false
+    },
+    "score": 1.83,
+    "return_pct": -10.4,
+    "sharpe": -0.82,
+    "max_dd_pct": -11.0,
+    "trades": 22,
+    "costs_x2_return_pct": -11.3,
+    "hold_sharpe": 0.26,
+    "mc_prob_loss_pct": 92.6,
+    "regimes": {
+      "bull": -0.84,
+      "bear": -2.01,
+      "chop": -0.44
+    },
+    "by_market": {
+      "ETH": {
+        "count": 22,
+        "sum": -10.44
+      }
+    },
+    "skipped_min_lot_pct": 0.0,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "k": 3.0,
+        "oi_drop": 0.01,
+        "hold_h": 12,
+        "stop_atr": 3.0
+      },
+      "risk": {}
+    }
+  },
+  "lead_lag": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "True",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 2.83,
+    "return_pct": 11.9,
+    "sharpe": 0.42,
+    "max_dd_pct": -18.8,
+    "trades": 287,
+    "costs_x2_return_pct": -1.3,
+    "hold_sharpe": 0.26,
+    "mc_prob_loss_pct": 26.2,
+    "regimes": {
+      "bull": -0.07,
+      "bear": 2.97,
+      "chop": -0.46
+    },
+    "by_market": {
+      "ETH": {
+        "count": 287,
+        "sum": 11.89
+      }
+    },
+    "skipped_min_lot_pct": 0.0,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "k": 3.0,
+        "hold_h": 4,
+        "stop_atr": 3.0
+      },
+      "risk": {
+        "ETH": 0.02
+      }
+    }
+  },
+  "vol_breakout": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "False",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 2.17,
+    "return_pct": -5.3,
+    "sharpe": 0.07,
+    "max_dd_pct": -35.1,
+    "trades": 571,
+    "costs_x2_return_pct": -24.3,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 57.5,
+    "regimes": {
+      "bull": -1.55,
+      "bear": 1.61,
+      "chop": 0.29
+    },
+    "by_market": {
+      "BTC": {
+        "count": 209,
+        "sum": -4.19
+      },
+      "ETH": {
+        "count": 210,
+        "sum": -25.01
+      },
+      "GOLD": {
+        "count": 152,
+        "sum": 23.92
+      }
+    },
+    "skipped_min_lot_pct": 3.0,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "ratio": 0.8,
+        "hold_h": 24,
+        "stop_atr": 3.0
+      },
+      "risk": {
+        "ETH": 0.01280596343483478,
+        "GOLD": 0.015999057540906848
+      }
+    }
+  },
+  "mean_reversion": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "False",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 2.0,
+    "return_pct": -32.2,
+    "sharpe": -1.44,
+    "max_dd_pct": -34.0,
+    "trades": 443,
+    "costs_x2_return_pct": -35.7,
+    "hold_sharpe": 0.9,
+    "mc_prob_loss_pct": 99.8,
+    "regimes": {
+      "bull": -2.13,
+      "bear": -0.84,
+      "chop": -1.26
+    },
+    "by_market": {
+      "EUR": {
+        "count": 102,
+        "sum": -7.27
+      },
+      "GOLD": {
+        "count": 341,
+        "sum": -24.97
+      }
+    },
+    "skipped_min_lot_pct": 3.4,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "k": 3.0,
+        "hold_h": 12,
+        "stop_atr": 3.0
+      },
+      "risk": {}
+    }
+  },
+  "trend_4h_trail": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 2.33,
+    "return_pct": 3.7,
+    "sharpe": 0.16,
+    "max_dd_pct": -33.7,
+    "trades": 1354,
+    "costs_x2_return_pct": -9.6,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 48.4,
+    "regimes": {
+      "bull": -0.33,
+      "bear": 0.83,
+      "chop": 0.19
+    },
+    "by_market": {
+      "BTC": {
+        "count": 477,
+        "sum": -21.64
+      },
+      "ETH": {
+        "count": 513,
+        "sum": 26.45
+      },
+      "EUR": {
+        "count": 110,
+        "sum": -4.64
+      },
+      "GOLD": {
+        "count": 254,
+        "sum": 3.55
+      }
+    },
+    "skipped_min_lot_pct": 8.7,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 30,
+        "stop_atr": 4.0,
+        "trail_atr": 6.0
+      },
+      "risk": {
+        "GOLD": 0.01476963768847717
+      }
+    }
+  },
+  "trend_4h_tp": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 2.5,
+    "return_pct": 2.4,
+    "sharpe": 0.16,
+    "max_dd_pct": -48.1,
+    "trades": 1007,
+    "costs_x2_return_pct": -7.8,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 49.9,
+    "regimes": {
+      "bull": 0.78,
+      "bear": -0.11,
+      "chop": 0.01
+    },
+    "by_market": {
+      "BTC": {
+        "count": 381,
+        "sum": -23.03
+      },
+      "ETH": {
+        "count": 265,
+        "sum": 30.69
+      },
+      "EUR": {
+        "count": 74,
+        "sum": -22.13
+      },
+      "GOLD": {
+        "count": 287,
+        "sum": 16.89
+      }
+    },
+    "skipped_min_lot_pct": 5.2,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 120,
+        "stop_atr": 4.0,
+        "tp_r": 2.0
+      },
+      "risk": {
+        "GOLD": 0.02
+      }
+    }
+  },
+  "trend_4h_time": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "True",
+      "enough_trades": true
+    },
+    "score": 2.83,
+    "return_pct": 31.5,
+    "sharpe": 0.56,
+    "max_dd_pct": -35.2,
+    "trades": 1109,
+    "costs_x2_return_pct": 22.6,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 20.0,
+    "regimes": {
+      "bull": 0.52,
+      "bear": 0.98,
+      "chop": 0.47
+    },
+    "by_market": {
+      "BTC": {
+        "count": 381,
+        "sum": 5.84
+      },
+      "ETH": {
+        "count": 271,
+        "sum": 13.57
+      },
+      "EUR": {
+        "count": 43,
+        "sum": -12.81
+      },
+      "GOLD": {
+        "count": 414,
+        "sum": 24.91
+      }
+    },
+    "skipped_min_lot_pct": 5.5,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 30,
+        "stop_atr": 4.0,
+        "max_hold_h": 240
+      },
+      "risk": {
+        "BTC": 0.0004247934117755952,
+        "GOLD": 0.01276708869079914
+      }
+    }
+  },
+  "trend_4h_be": {
+    "passes": true,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "True",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "True",
+      "enough_trades": true
+    },
+    "score": 3.17,
+    "return_pct": 42.1,
+    "sharpe": 0.67,
+    "max_dd_pct": -23.0,
+    "trades": 988,
+    "costs_x2_return_pct": 24.2,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 16.8,
+    "regimes": {
+      "bull": 1.47,
+      "bear": 0.84,
+      "chop": 0.25
+    },
+    "by_market": {
+      "BTC": {
+        "count": 322,
+        "sum": -1.56
+      },
+      "ETH": {
+        "count": 353,
+        "sum": -3.05
+      },
+      "GOLD": {
+        "count": 313,
+        "sum": 46.76
+      }
+    },
+    "skipped_min_lot_pct": 5.0,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 120,
+        "stop_atr": 4.0,
+        "be_r": 2.0
+      },
+      "risk": {
+        "ETH": 0.006533349054834602,
+        "GOLD": 0.005879116737827866
+      }
+    }
+  },
+  "trend_4h_lock": {
+    "passes": true,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "True",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "True",
+      "enough_trades": true
+    },
+    "score": 3.5,
+    "return_pct": 87.4,
+    "sharpe": 1.04,
+    "max_dd_pct": -20.8,
+    "trades": 995,
+    "costs_x2_return_pct": 77.1,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 5.3,
+    "regimes": {
+      "bull": 0.34,
+      "bear": 4.76,
+      "chop": 0.49
+    },
+    "by_market": {
+      "BTC": {
+        "count": 271,
+        "sum": 5.49
+      },
+      "ETH": {
+        "count": 312,
+        "sum": 30.13
+      },
+      "EUR": {
+        "count": 80,
+        "sum": -11.42
+      },
+      "GOLD": {
+        "count": 332,
+        "sum": 63.22
+      }
+    },
+    "skipped_min_lot_pct": 7.1,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 120,
+        "stop_atr": 8.0,
+        "profit_lock": 0.02
+      },
+      "risk": {
+        "GOLD": 0.02
+      }
+    }
+  },
+  "trend_4h_dayflat": {
+    "passes": true,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "True",
+      "profitable_after_costs": "True",
+      "profitable_with_costs_doubled": "True",
+      "enough_trades": true
+    },
+    "score": 3.0,
+    "return_pct": 44.2,
+    "sharpe": 0.71,
+    "max_dd_pct": -34.1,
+    "trades": 1522,
+    "costs_x2_return_pct": 36.1,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 13.9,
+    "regimes": {
+      "bull": 1.34,
+      "bear": 0.3,
+      "chop": 0.49
+    },
+    "by_market": {
+      "BTC": {
+        "count": 464,
+        "sum": 14.74
+      },
+      "ETH": {
+        "count": 428,
+        "sum": 5.26
+      },
+      "EUR": {
+        "count": 53,
+        "sum": -10.14
+      },
+      "GOLD": {
+        "count": 577,
+        "sum": 34.34
+      }
+    },
+    "skipped_min_lot_pct": 5.1,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 120,
+        "stop_atr": 8.0,
+        "day_flat": 1
+      },
+      "risk": {
+        "GOLD": 0.02
+      }
+    }
+  },
+  "trend_4h_partial": {
+    "passes": false,
+    "gates": {
+      "beats_buy_and_hold_sharpe": "False",
+      "profitable_after_costs": "False",
+      "profitable_with_costs_doubled": "False",
+      "enough_trades": true
+    },
+    "score": 2.0,
+    "return_pct": -31.1,
+    "sharpe": -0.34,
+    "max_dd_pct": -52.3,
+    "trades": 1375,
+    "costs_x2_return_pct": -43.6,
+    "hold_sharpe": 0.63,
+    "mc_prob_loss_pct": 86.9,
+    "regimes": {
+      "bull": 1.13,
+      "bear": -1.23,
+      "chop": -0.65
+    },
+    "by_market": {
+      "BTC": {
+        "count": 425,
+        "sum": -13.64
+      },
+      "ETH": {
+        "count": 487,
+        "sum": -26.45
+      },
+      "EUR": {
+        "count": 62,
+        "sum": -3.87
+      },
+      "GOLD": {
+        "count": 401,
+        "sum": 12.85
+      }
+    },
+    "skipped_min_lot_pct": 9.5,
+    "last_fold": {
+      "test_start": "2026-09-01",
+      "params": {
+        "lookback_4h": 120,
+        "stop_atr": 4.0,
+        "partial_r": 2.0,
+        "partial_frac": 0.5
+      },
+      "risk": {
+        "BTC": 0.011509720444064465,
+        "ETH": 0.014760579882021658,
+        "GOLD": 0.007799567793966125
+      }
+    }
+  }
+}

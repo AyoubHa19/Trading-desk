@@ -109,3 +109,36 @@ if __name__ == "__main__":
         print(k, json.dumps(v))
     Path("reports/mt5_exness.json").write_text(json.dumps({"profile_estimates": PROFILE, "scenarios": SCENARIOS,
                                                            "results": out}, indent=2))
+
+
+# ---------------------------------------------------------------- every idea, on Exness
+def _eval_strategy(args):
+    scn, name = args
+    BrokerBook, stats = setup(scn)
+    engine.Book = BrokerBook
+    s = quant.STRATEGIES[name]
+    mk = [m for m in s["markets"] if m in PROFILE]
+    if not mk:
+        return name, None
+    quant.STRATEGIES[name] = dict(s, markets=mk)
+    r = quant.evaluate(name)
+    o = r["oos"]
+    return name, {"passes": r["passes"], "gates": r["gates"], "score": r["score"]["total"],
+                  "return_pct": round(o["return_pct"], 1), "sharpe": round(o["sharpe"], 2), "max_dd_pct": round(o["max_dd_pct"], 1),
+                  "trades": o["trades"], "costs_x2_return_pct": round(r["costs_doubled"]["return_pct"], 1),
+                  "hold_sharpe": round(r["buy_and_hold"]["sharpe"], 2), "mc_prob_loss_pct": r["monte_carlo"].get("prob_loss_pct"),
+                  "regimes": r["regime_sharpe"], "by_market": r["by_market"], "skipped_min_lot_pct":
+                  round(100 * stats["skipped_min_lot"] / max(stats["signals"], 1), 1), "last_fold": r["folds"][-1]}
+
+
+def all_strategies(scn="cent_swap_mid"):
+    names = [n for n in quant.STRATEGIES if n != "pricer_gap"]
+    with ProcessPoolExecutor(4) as pool:
+        res = dict(pool.map(_eval_strategy, [(scn, n) for n in names]))
+    res = {k: v for k, v in res.items() if v}
+    Path(f"reports/mt5_exness_all_{scn}.json").write_text(json.dumps(res, indent=2, default=str))
+    for k, v in sorted(res.items(), key=lambda kv: (kv[1]["passes"], kv[1]["sharpe"]), reverse=True):
+        print(f"{k:22} pass={v['passes']!s:5} ret={v['return_pct']:7.1f}% sharpe={v['sharpe']:5.2f} dd={v['max_dd_pct']:6.1f}% "
+              f"trades={v['trades']:5} x2={v['costs_x2_return_pct']:6.1f}% hold_sharpe={v['hold_sharpe']:.2f} "
+              f"MCloss={v['mc_prob_loss_pct']} markets={ {m: round(x['sum'], 1) for m, x in v['by_market'].items()} }")
+    return res
