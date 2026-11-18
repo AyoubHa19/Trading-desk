@@ -5,7 +5,7 @@
 //| desk/risk.py, desk/engine.py). DEMO ACCOUNTS ONLY by default.    |
 //+------------------------------------------------------------------+
 #property copyright "Trading desk (demo)"
-#property version   "1.00"
+#property version   "1.10"
 #property description "Trend 20 days (H4 close vs 120 H4 bars ago), stop 8x ATR(24 H1),"
 #property description "2% risk per trade, -5% or 3 losses = stop the New York day,"
 #property description "optional +2% profit lock. Demo accounts only unless you change InpDemoOnly."
@@ -17,9 +17,12 @@ input string InpSymbols         = "XAUUSDc,BTCUSDc,ETHUSDc"; // Symbols to trade
 input string InpThemeSymbols    = "BTCUSDc,ETHUSDc";         // Symbols that count as ONE bet (crypto)
 input double InpRiskPct         = 2.0;    // Max risk per trade, % of equity
 input string InpRiskOverrides   = "";     // Per-symbol risk, e.g. "BTCUSDc:1,ETHUSDc:0.8"
-input int    InpLookbackH4      = 120;    // Trend lookback in H4 bars (120 = 20 days)
+input ENUM_TIMEFRAMES InpCheckTF = PERIOD_H1; // How often the EA decides (tested: H1)
+input ENUM_TIMEFRAMES InpTrendTF = PERIOD_H4; // Bars used for the trend (tested: H4)
+input ENUM_TIMEFRAMES InpATRTF   = PERIOD_H1; // Bars used for the ATR / stop (tested: H1)
+input int    InpLookbackH4      = 120;    // Trend lookback in InpTrendTF bars (120 x H4 = 20 days)
 input double InpStopATR         = 8.0;    // Stop distance in ATRs
-input int    InpATRBars         = 24;     // ATR length in H1 bars
+input int    InpATRBars         = 24;     // ATR length in InpATRTF bars
 input double InpThemeRiskPct    = 5.0;    // Max total risk of the theme symbols, % of equity
 input double InpMaxLeverage     = 3.0;    // Max total position value / equity
 input double InpDailyLossPct    = 5.0;    // Stop the New York day after this loss %
@@ -116,7 +119,7 @@ int TrendSignal(string s, double &now, double &then, double &nextLine)
    double c[];
    ArraySetAsSeries(c, true);
    int need = InpLookbackH4 + 1;
-   if(CopyClose(s, PERIOD_H4, 1, need, c) != need) return 0;
+   if(CopyClose(s, InpTrendTF, 1, need, c) != need) return 0;
    now = c[0];
    then = c[InpLookbackH4];
    nextLine = c[InpLookbackH4 - 1];   // the reference price at the NEXT H4 close
@@ -130,7 +133,7 @@ double ATRH1(string s)
    MqlRates r[];
    ArraySetAsSeries(r, true);
    int n = InpATRBars;
-   if(CopyRates(s, PERIOD_H1, 1, n + 1, r) != n + 1) return 0;
+   if(CopyRates(s, InpATRTF, 1, n + 1, r) != n + 1) return 0;
    double sum = 0;
    for(int i = 0; i < n; i++)
    {
@@ -326,7 +329,8 @@ void Hourly()
          PrintFormat("OPEN %s %s %.2f lots @ %.5f, stop %.5f (%.1f ATR), risk %.2f. Why: price %.5f vs %.5f 20 days ago (%+.1f%%)",
                      want > 0 ? "LONG" : "SHORT", s, lots, price, sl, InpStopATR, lots * stopDist * vpu, now, then, 100.0 * (now / then - 1.0));
       else
-         PrintFormat("OPEN %s FAILED: retcode %d (market closed? will retry next hour)", s, g_trade.ResultRetcode());
+         PrintFormat("OPEN %s FAILED: %d %s (will retry at the next check)", s, g_trade.ResultRetcode(),
+                     g_trade.ResultRetcodeDescription());
    }
    SaveState();
    ShowStatus();
@@ -344,7 +348,7 @@ void ShowStatus()
       int sig = TrendSignal(g_syms[i], now, then, nextLine);
       ulong tk; int d; double r, v;
       GetPosition(g_syms[i], tk, d, r, v);
-      txt += StringFormat("%s: trend %s | position %s | line now %.5f, next 4h line %.5f\n", g_syms[i],
+      txt += StringFormat("%s: trend %s | position %s | line now %.5f, next line %.5f\n", g_syms[i],
                           sig > 0 ? "UP" : sig < 0 ? "DOWN" : "?", d > 0 ? "LONG" : d < 0 ? "SHORT" : "none", then, nextLine);
    }
    Comment(txt);
@@ -406,7 +410,11 @@ int OnInit()
    g_trade.SetDeviationInPoints(50);
    LoadState();
    EventSetTimer(30);
-   PrintFormat("TrendDesk started on %d symbols, risk %.1f%%, profit lock %s", m, InpRiskPct, InpUseProfitLock ? "ON" : "OFF");
+   PrintFormat("TrendDesk started on %d symbols, risk %.1f%%, profit lock %s, check %s, trend %s x%d, ATR %s",
+               m, InpRiskPct, InpUseProfitLock ? "ON" : "OFF", EnumToString(InpCheckTF), EnumToString(InpTrendTF),
+               InpLookbackH4, EnumToString(InpATRTF));
+   if(InpCheckTF != PERIOD_H1 || InpTrendTF != PERIOD_H4 || InpATRTF != PERIOD_H1)
+      Print("TrendDesk: TEST timeframes - this is NOT the tested strategy, use it only to check orders and stops");
    return INIT_SUCCEEDED;
 }
 
@@ -418,7 +426,8 @@ void OnDeinit(const int reason)
 
 void Tick()
 {
-   datetime hour = (datetime)(((long)TimeCurrent() / 3600) * 3600);
+   long step = PeriodSeconds(InpCheckTF);                     // H1 = 3600 s, M5 = 300 s
+   datetime hour = (datetime)(((long)TimeCurrent() / step) * step);
    if(hour != g_lastHour)
    {
       g_lastHour = hour;
