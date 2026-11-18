@@ -76,6 +76,10 @@ class Book:
             p["funding"] -= funding
             p["risk"] -= risk
 
+    def _size(self, m, *args):
+        """Position size for market m (a broker simulation can override this to apply lot rules)."""
+        return position_size(*args)
+
     def _breakeven(self, m, p, d):
         level = p["entry"] * (1 + d * 2 * self.cost[m])  # entry plus the round-trip costs
         p["stop"] = max(p["stop"], level) if d > 0 else min(p["stop"], level)
@@ -111,7 +115,7 @@ class Book:
                 gross = sum(abs(q["units"]) * opens[k] for k, q in self.pos.items() if q)
                 theme_risk = sum(q["risk"] for k, q in self.pos.items() if q and self.theme[k] == self.theme[m])
                 stop_dist = stop_atr[m] * atr if atr else float("nan")
-                units, risk_amt = position_size(eq, risk_frac[m], opens[m], stop_dist, gross, theme_risk, qv, self.cost[m])
+                units, risk_amt = self._size(m, eq, risk_frac[m], opens[m], stop_dist, gross, theme_risk, qv, self.cost[m])
                 if units > 0:
                     entry = opens[m]
                     cost = units * entry * self.cost[m]

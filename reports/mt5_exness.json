@@ -1,0 +1,173 @@
+{
+  "profile_estimates": {
+    "BTC": {
+      "contract": 1.0,
+      "min_lot": 0.01,
+      "lot_step": 0.01,
+      "spread": 0.0003,
+      "fx_swap": false
+    },
+    "ETH": {
+      "contract": 1.0,
+      "min_lot": 0.1,
+      "lot_step": 0.1,
+      "spread": 0.0008,
+      "fx_swap": false
+    },
+    "GOLD": {
+      "contract": 100.0,
+      "min_lot": 0.01,
+      "lot_step": 0.01,
+      "spread": 6e-05,
+      "fx_swap": true
+    },
+    "EUR": {
+      "contract": 100000.0,
+      "min_lot": 0.01,
+      "lot_step": 0.01,
+      "spread": 0.0001,
+      "fx_swap": true
+    }
+  },
+  "scenarios": {
+    "standard_noswap": {
+      "cent": false,
+      "swap": {
+        "crypto": 0.0,
+        "fx": 0.0
+      }
+    },
+    "standard_swap": {
+      "cent": false,
+      "swap": {
+        "crypto": 0.0006,
+        "fx": 0.0001
+      }
+    },
+    "cent_noswap": {
+      "cent": true,
+      "swap": {
+        "crypto": 0.0,
+        "fx": 0.0
+      }
+    },
+    "cent_swap_mid": {
+      "cent": true,
+      "swap": {
+        "crypto": 0.0003,
+        "fx": 0.0001
+      }
+    },
+    "cent_swap_high": {
+      "cent": true,
+      "swap": {
+        "crypto": 0.0006,
+        "fx": 0.0002
+      }
+    }
+  },
+  "results": {
+    "standard_noswap": {
+      "return_pct": 0.0,
+      "sharpe": 0.0,
+      "max_dd_pct": 0.0,
+      "trades": 0,
+      "costs_x2_return_pct": 0.0,
+      "skipped_min_lot_pct": 100.0,
+      "by_market": {},
+      "passes": false,
+      "mc_prob_loss_pct": null
+    },
+    "standard_swap": {
+      "return_pct": 0.0,
+      "sharpe": 0.0,
+      "max_dd_pct": 0.0,
+      "trades": 0,
+      "costs_x2_return_pct": 0.0,
+      "skipped_min_lot_pct": 100.0,
+      "by_market": {},
+      "passes": false,
+      "mc_prob_loss_pct": null
+    },
+    "cent_noswap": {
+      "return_pct": 38.6,
+      "sharpe": 0.62,
+      "max_dd_pct": -22.3,
+      "trades": 1090,
+      "costs_x2_return_pct": 15.8,
+      "skipped_min_lot_pct": 8.9,
+      "by_market": {
+        "BTC": {
+          "count": 323,
+          "sum": 2.03
+        },
+        "ETH": {
+          "count": 355,
+          "sum": -1.47
+        },
+        "EUR": {
+          "count": 71,
+          "sum": -7.89
+        },
+        "GOLD": {
+          "count": 341,
+          "sum": 45.95
+        }
+      },
+      "passes": false,
+      "mc_prob_loss_pct": 19.0
+    },
+    "cent_swap_mid": {
+      "return_pct": 43.7,
+      "sharpe": 0.7,
+      "max_dd_pct": -23.9,
+      "trades": 916,
+      "costs_x2_return_pct": 19.3,
+      "skipped_min_lot_pct": 8.8,
+      "by_market": {
+        "BTC": {
+          "count": 304,
+          "sum": 8.6
+        },
+        "ETH": {
+          "count": 304,
+          "sum": -5.92
+        },
+        "EUR": {
+          "count": 23,
+          "sum": -2.46
+        },
+        "GOLD": {
+          "count": 285,
+          "sum": 43.49
+        }
+      },
+      "passes": true,
+      "mc_prob_loss_pct": 13.5
+    },
+    "cent_swap_high": {
+      "return_pct": 31.9,
+      "sharpe": 0.6,
+      "max_dd_pct": -21.8,
+      "trades": 847,
+      "costs_x2_return_pct": 20.3,
+      "skipped_min_lot_pct": 10.5,
+      "by_market": {
+        "BTC": {
+          "count": 299,
+          "sum": 3.73
+        },
+        "ETH": {
+          "count": 269,
+          "sum": -2.81
+        },
+        "GOLD": {
+          "count": 279,
+          "sum": 30.93
+        }
+      },
+      "passes": false,
+      "mc_prob_loss_pct": 19.1
+    }
+  }
+}
