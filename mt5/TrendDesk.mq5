@@ -455,12 +455,14 @@ void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest 
               + HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
    g_streak = (pnl < 0) ? g_streak + 1 : 0;
 
-   if(HistoryDealGetInteger(trans.deal, DEAL_REASON) == DEAL_REASON_SL)
+   long reason = HistoryDealGetInteger(trans.deal, DEAL_REASON);
+   if(reason == DEAL_REASON_SL || reason == DEAL_REASON_TP)   // after a stop or a take profit: wait for a new signal
    {
       int idx = SymIndex(HistoryDealGetString(trans.deal, DEAL_SYMBOL));
       // a SELL deal closes a LONG position, a BUY deal closes a SHORT one
       if(idx >= 0) g_blocked[idx] = (HistoryDealGetInteger(trans.deal, DEAL_TYPE) == DEAL_TYPE_SELL) ? 1 : -1;
-      PrintFormat("STOP hit on %s, pnl %.2f", HistoryDealGetString(trans.deal, DEAL_SYMBOL), pnl);
+      PrintFormat("%s hit on %s, pnl %.2f", reason == DEAL_REASON_TP ? "TAKE PROFIT" : "STOP",
+                  HistoryDealGetString(trans.deal, DEAL_SYMBOL), pnl);
    }
    SaveState();
 }
