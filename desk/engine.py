@@ -196,7 +196,7 @@ class Book:
 
 
 def run(data, feats, targets, stop_atr, risk_frac, start, end,
-        start_equity=C.START_CAPITAL, cost_mult=1.0, exits=None) -> Result:
+        start_equity=C.START_CAPITAL, cost_mult=1.0, exits=None, book=None, close_at_end=True) -> Result:
     """Backtest. targets: {market: Series of -1/0/1}; stop_atr / risk_frac: {market: float}."""
     markets = list(targets)
     idx = data["BTC"].loc[start:end].index
@@ -214,8 +214,14 @@ def run(data, feats, targets, stop_atr, risk_frac, start, end,
                 "atr": f["atr"].tolist(), "qv": f["quote_vol_24h"].tolist(),
                 "tgt": targets[m].reindex(idx).fillna(0.0).tolist()}
 
-    book = Book(markets, start_equity, cost_mult, exits)
-    eq_curve = [float(start_equity)]
+    # A Book passed in keeps its open positions from the previous window (walk-forward
+    # continuity, exactly like the live bot); otherwise start flat.
+    if book is None:
+        book = Book(markets, start_equity, cost_mult, exits)
+    else:
+        book.exits = {k: v for k, v in (exits or {}).items() if v}
+    n_trades, n_halts = len(book.trades), len(book.guard.log)
+    eq_curve = [float(book.equity({m: A[m]["c"][0] for m in markets}))]
     for i in range(1, len(idx)):
         col = lambda k, j=i: {m: A[m][k][j] for m in markets}  # noqa: E731
         decisions = {m: (A[m]["tgt"][i - 1], A[m]["atr"][i - 1], A[m]["qv"][i - 1]) for m in markets}
@@ -225,9 +231,10 @@ def run(data, feats, targets, stop_atr, risk_frac, start, end,
 
     # End of the window: close what is still open so every trade is counted
     # (and paid for) inside the window it belongs to.
-    book.close_all(idx[-1], {m: A[m]["c"][-1] for m in markets}, "end")
-    eq_curve[-1] = book.realized
-    return Result(pd.Series(eq_curve, index=idx), pd.DataFrame(book.trades), book.guard.log)
+    if close_at_end:
+        book.close_all(idx[-1], {m: A[m]["c"][-1] for m in markets}, "end")
+        eq_curve[-1] = book.realized
+    return Result(pd.Series(eq_curve, index=idx), pd.DataFrame(book.trades[n_trades:]), book.guard.log[n_halts:])
 
 
 def stats(equity: pd.Series, trades: pd.DataFrame) -> dict:

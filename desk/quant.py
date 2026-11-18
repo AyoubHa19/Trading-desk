@@ -118,10 +118,15 @@ def choose(name, tr0, tr1):
 
 
 def walk_forward(name, cost_mult=1.0, fixed=None):
-    """Chain the out-of-sample folds. `fixed` re-uses earlier choices (for the costs-doubled test)."""
+    """Chain the out-of-sample folds with ONE book, like the live bot: open trades carry over
+    from one fold to the next (no forced close every 3 months). At each fold the parameters
+    and per-market risk are re-chosen on the previous 12 months; a market that is dropped gets
+    no new trades but its open trade runs to its own exit. `fixed` re-uses earlier choices."""
+    markets = STRATEGIES[name]["markets"]
+    book = engine.Book(markets, C.START_CAPITAL, cost_mult)
     eq_parts, trades, halts, choices = [], [], [], []
-    equity = C.START_CAPITAL
-    for k, (tr0, tr1, te0, te1) in enumerate(folds()):
+    all_folds = list(folds())
+    for k, (tr0, tr1, te0, te1) in enumerate(all_folds):
         if fixed:
             p, risk = fixed[k]["params"], fixed[k]["risk"]
         elif STRATEGIES[name].get("oos_only"):
@@ -130,21 +135,17 @@ def walk_forward(name, cost_mult=1.0, fixed=None):
         else:
             p, risk = choose(name, tr0, tr1)
         choices.append({"test_start": str(te0.date()), "params": p, "risk": risk})
-        if risk:
-            tg = targets_for(name, p, list(risk))
-            res = engine.run(DATA, FEATS, tg, {m: p["stop_atr"] for m in risk}, risk, te0, te1,
-                             start_equity=equity, cost_mult=cost_mult, exits=exits_of(p))
-            eq_parts.append(res.equity)
-            trades.append(res.trades)
-            halts += res.halts
-            equity = float(res.equity.iloc[-1])
-        else:  # sat out the whole fold: equity flat
-            idx = DATA["BTC"].loc[te0:te1].index
-            eq_parts.append(pd.Series(equity, index=idx))
+        tg = targets_for(name, p, markets)
+        res = engine.run(DATA, FEATS, tg, {m: p["stop_atr"] for m in markets}, {m: risk.get(m, 0.0) for m in markets},
+                         te0, te1, cost_mult=cost_mult, exits=exits_of(p), book=book,
+                         close_at_end=(k == len(all_folds) - 1))
+        eq_parts.append(res.equity)
+        trades.append(res.trades)
+        halts += res.halts
     eq = pd.concat(eq_parts)
     eq = eq[~eq.index.duplicated(keep="last")]
     tr = pd.concat([t for t in trades if len(t)], ignore_index=True) if any(len(t) for t in trades) else pd.DataFrame(
-        columns=["market", "pnl", "R", "exit_time"])
+        columns=["market", "pnl", "R", "exit_time", "entry_time"])
     return eq, tr, halts, choices
 
 
