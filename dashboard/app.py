@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import plotly.graph_objects as go
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,6 +28,7 @@ st.set_page_config(page_title="مكتب التداول", page_icon="📈", layou
 st.markdown("""
 <style>
   html, body, [class*="st-"] { direction: rtl; }
+  [data-testid="stPlotlyChart"], [data-testid="stPlotlyChart"] * { direction: ltr !important; }
   .num { direction: ltr; unicode-bidi: embed; font-variant-numeric: tabular-nums; }
   .card { border: 1px solid rgba(128,128,128,.25); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
   .row { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: baseline; }
@@ -121,6 +123,76 @@ def why_text(m, p):
     return "<b>علاش تحل؟</b> ما تسجلش السبب ديال هاد الـ trade."
 
 
+CHART_DAYS_BACK, CHART_DAYS_AHEAD = 10, 20  # 20 days ahead = the whole known future of the line
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def history(market: str):
+    """~32 days of hourly OKX candles: enough for the 20-day line over the last 10 days."""
+    df = okx.candles_1h(C.MARKETS[market]["okx"], 24 * 32)
+    if C.MARKETS[market]["okx"] == "USDT-EUR":
+        df = df.assign(open=1 / df["open"], high=1 / df["low"], low=1 / df["high"], close=1 / df["close"])
+    return df
+
+
+def trade_chart(m, p, champ, closed, px, candle_hours):
+    """Live chart: candles, the 20-day line (past solid, future dotted), entry, stop, price now, past trades."""
+    n = champ["params"]["lookback_4h"]
+    df = history(m)
+    if px:  # the bar in progress follows the live price
+        last = df.index[-1]
+        df.loc[last, ["close", "high", "low"]] = [px, max(df.loc[last, "high"], px), min(df.loc[last, "low"], px)]
+    done = df[df["confirmed"]]
+    c4 = done["close"][done.index.hour % 4 == 3].copy()
+    c4.index = c4.index + pd.Timedelta(hours=1)          # moment each 4h close is known
+    line_past = c4.shift(n).dropna()
+    fut_t = [c4.index[-1] + pd.Timedelta(hours=4 * (k + 1)) for k in range(6 * CHART_DAYS_AHEAD)]
+    fut_v = [float(c4.iloc[-n + k]) for k in range(min(len(fut_t), n))]
+    fut_t = fut_t[:len(fut_v)]
+
+    bars = df if candle_hours == 1 else df.resample("4h").agg(
+        {"open": "first", "high": "max", "low": "min", "close": "last"}).dropna()
+    start = df.index[-1] - pd.Timedelta(days=CHART_DAYS_BACK)
+    bars = bars[bars.index >= start]
+    line_past = line_past[line_past.index >= start]
+    end = fut_t[-1]
+
+    fig = go.Figure()
+    fig.add_trace(go.Candlestick(x=bars.index, open=bars["open"], high=bars["high"], low=bars["low"], close=bars["close"],
+                                 name="الثمن", increasing_line_color="#16a34a", decreasing_line_color="#dc2626"))
+    fig.add_trace(go.Scatter(x=line_past.index, y=line_past.values, name="الحد (ثمن قبل 20 يوم)",
+                             line=dict(color="#e08a00", width=2)))
+    fig.add_trace(go.Scatter(x=fut_t, y=fut_v, name="الحد فالأيام الجاية", line=dict(color="#e08a00", width=2, dash="dot")))
+    entry_t = pd.Timestamp(p["t"])
+    fig.add_trace(go.Scatter(x=[entry_t, end], y=[p["entry"]] * 2, name="الدخول", mode="lines",
+                             line=dict(color="#7c8796", width=1.5, dash="dash")))
+    fig.add_trace(go.Scatter(x=[entry_t, end], y=[p["stop"]] * 2, name="Stop", mode="lines",
+                             line=dict(color="#dc2626", width=2)))
+    side = "SHORT" if p["units"] < 0 else "LONG"
+    fig.add_trace(go.Scatter(x=[entry_t], y=[p["entry"]], mode="markers+text", text=[side], textposition="bottom center",
+                             marker=dict(size=11, color="#1f6feb", symbol="triangle-down" if side == "SHORT" else "triangle-up"),
+                             name="دخلنا", showlegend=False))
+    if px:
+        fig.add_trace(go.Scatter(x=[df.index[-1]], y=[px], mode="markers", marker=dict(size=10, color="#1f6feb",
+                                 line=dict(color="white", width=2)), name="دابا", showlegend=False))
+    # earlier closed trades on this market, inside the window
+    for t in closed:
+        if t["market"] != m or pd.Timestamp(t["exit_time"]) < start:
+            continue
+        fig.add_trace(go.Scatter(x=[pd.Timestamp(t["entry_time"]), pd.Timestamp(t["exit_time"])], y=[t["entry"], t["exit"]],
+                                 mode="lines+markers", line=dict(color="#16a34a" if t["pnl"] > 0 else "#dc2626", width=1, dash="dot"),
+                                 marker=dict(size=6), name=f"trade قديم {t['pnl']:+.2f}$", showlegend=False))
+    ys = list(bars["low"]) + list(bars["high"]) + [p["stop"], p["entry"]] + fut_v + list(line_past.values)
+    lo, hi = min(ys), max(ys)
+    pad = (hi - lo) * 0.05
+    fig.update_layout(height=430, margin=dict(l=58, r=10, t=10, b=10), xaxis_rangeslider_visible=False,
+                      yaxis=dict(range=[lo - pad, hi + pad], side="left", automargin=True,
+                                 tickformat=".4~s" if hi >= 1000 else ".2f"),
+                      xaxis=dict(range=[start, end]), legend=dict(orientation="h", y=-0.12, x=0),
+                      uirevision=f"{m}-{candle_hours}", hovermode="x unified")
+    return fig
+
+
 @st.fragment(run_every=REFRESH_SECONDS)
 def screen():
     cfg, ledgers, eq, risk = load_state()
@@ -159,6 +231,9 @@ def screen():
     c[3].metric("حالة البوت", "واقف اليوم ⛔" if g["halted"] else "خدام ✅", g["reason"] or f"خسارات متتابعة: {g['streak']}", delta_color="off")
 
     st.subheader(f"الـ trades المفتوحين ({len(rows)})")
+    st.radio("الشموع", [4, 1], format_func=lambda h: f"{h} ساعات" if h > 1 else "ساعة", horizontal=True, key="candles")
+    st.caption("فالـ chart: الشموع = الثمن · البرتقالي = الحد (الثمن ديال قبل 20 يوم)، المنقط = الأيام الجاية · "
+               "الحمر = Stop · الرمادي = الدخول. الـ trade كيتسد ملي الثمن يقطع البرتقالي ولا يضرب الحمر.")
     if not rows:
         st.info("ما كاين حتى trade مفتوح دابا. البوت كيقرر كل ساعة.")
     for m, p, px, at, u in rows:
@@ -184,6 +259,11 @@ def screen():
   <div class="why">{why_text(m, p)}</div>
   <div class="why">{plan_text(m, p, champ)}</div>
 </div>""", unsafe_allow_html=True)
+        try:
+            st.plotly_chart(trade_chart(m, p, champ, book["trades"], px, st.session_state.get("candles", 4)),
+                            use_container_width=True, key=f"chart-{m}", config={"displayModeBar": False})
+        except Exception as e:  # never invent a chart: say it failed
+            st.caption(f"الـ chart ديال {m} ما تحملش دابا ({e.__class__.__name__}). غادي يعاود بوحدو.")
 
     st.subheader("الـ trades المسدودين")
     trades = pd.DataFrame(book["trades"])
