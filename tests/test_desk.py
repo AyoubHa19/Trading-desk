@@ -169,3 +169,17 @@ def test_take_profit_and_time_limit():
     assert tp.trades.iloc[0]["reason"] == "take profit" and abs(tp.trades.iloc[0]["R"] - 2.0) < 0.3
     tl = engine.run(data, feats, tgt, {"BTC": 3.0}, {"BTC": 0.01}, df.index[30], df.index[-1], exits={"max_hold_h": 24})
     assert tl.trades.iloc[0]["reason"] == "time limit"
+
+
+def test_breakeven_and_partial():
+    up = _toy(n=60, drift=0.004)
+    down = _toy(n=300, drift=-0.002)   # gentle fall: no daily -5% halt
+    df = pd.concat([up, down.assign(**{c: down[c] * up["close"].iloc[-1] / 100 for c in ["open", "high", "low", "close"]})
+                    .set_axis(pd.date_range(up.index[-1] + pd.Timedelta(hours=1), periods=300, freq="1h", tz="UTC"))])
+    data, feats = {"BTC": df}, {"BTC": add_features(df)}
+    tgt = {"BTC": pd.Series(1.0, index=df.index)}
+    be = engine.run(data, feats, tgt, {"BTC": 3.0}, {"BTC": 0.01}, df.index[30], df.index[-1], exits={"be_r": 1.0})
+    assert be.trades.iloc[0]["reason"] == "breakeven" and be.trades.iloc[0]["pnl"] > -0.01
+    pt = engine.run(data, feats, tgt, {"BTC": 3.0}, {"BTC": 0.01}, df.index[30], df.index[-1], exits={"partial_r": 1.0, "partial_frac": 0.5})
+    assert list(pt.trades["reason"][:2]) == ["partial take profit", "breakeven"]
+    assert math.isclose(pt.trades["pnl"].sum(), pt.equity.iloc[-1] - pt.equity.iloc[0], abs_tol=1e-9)

@@ -54,18 +54,32 @@ class Book:
     def equity(self, px) -> float:
         return self.realized + sum(p["units"] * (px[m] - p["entry"]) for m, p in self.pos.items() if p)
 
-    def _close(self, m, t, price, reason):
+    def _close(self, m, t, price, reason, frac=1.0):
+        """Close the position (or `frac` of it, for a partial take profit)."""
         p = self.pos[m]
-        cost = abs(p["units"]) * price * self.cost[m]
-        move = p["units"] * (price - p["entry"])
+        units = p["units"] * frac
+        cost = abs(units) * price * self.cost[m]
+        move = units * (price - p["entry"])
         self.realized += move - cost
-        pnl = move - cost - p["entry_cost"] + p["funding"]
-        self.trades.append({"market": m, "dir": int(np.sign(p["units"])), "entry_time": p["t"], "exit_time": t,
-                            "entry": p["entry"], "exit": price, "units": p["units"], "risk": p["risk"],
-                            "pnl": pnl, "R": pnl / p["risk"] if p["risk"] else 0.0, "reason": reason,
+        entry_cost, funding, risk = p["entry_cost"] * frac, p["funding"] * frac, p["risk"] * frac
+        pnl = move - cost - entry_cost + funding
+        self.trades.append({"market": m, "dir": int(np.sign(units)), "entry_time": p["t"], "exit_time": t,
+                            "entry": p["entry"], "exit": price, "units": units, "risk": risk,
+                            "pnl": pnl, "R": pnl / risk if risk else 0.0, "reason": reason,
                             "why": p.get("why")})
         self.guard.record_trade(pnl)
-        self.pos[m] = None
+        if frac >= 1:
+            self.pos[m] = None
+        else:
+            p["units"] -= units
+            p["entry_cost"] -= entry_cost
+            p["funding"] -= funding
+            p["risk"] -= risk
+
+    def _breakeven(self, m, p, d):
+        level = p["entry"] * (1 + d * 2 * self.cost[m])  # entry plus the round-trip costs
+        p["stop"] = max(p["stop"], level) if d > 0 else min(p["stop"], level)
+        p["be"] = True
 
     def close_all(self, t, px, reason):
         for m in self.markets:
@@ -124,11 +138,11 @@ class Book:
             d = 1 if p["units"] > 0 else -1
             if d > 0 and lows[m] <= p["stop"]:
                 self.blocked[m] = 1
-                self._close(m, t, min(opens[m], p["stop"]), "trail" if p.get("trailed") else "stop")
+                self._close(m, t, min(opens[m], p["stop"]), "trail" if p.get("trailed") else "breakeven" if p.get("be") else "stop")
                 continue
             if d < 0 and highs[m] >= p["stop"]:
                 self.blocked[m] = -1
-                self._close(m, t, max(opens[m], p["stop"]), "trail" if p.get("trailed") else "stop")
+                self._close(m, t, max(opens[m], p["stop"]), "trail" if p.get("trailed") else "breakeven" if p.get("be") else "stop")
                 continue
             if "tp_r" in ex and p.get("stop_dist0"):        # take profit (checked after the stop: conservative)
                 target = p["entry"] + d * ex["tp_r"] * p["stop_dist0"]
@@ -136,6 +150,19 @@ class Book:
                     self.blocked[m] = d                      # don't jump straight back in
                     self._close(m, t, max(opens[m], target) if d > 0 else min(opens[m], target), "take profit")
                     continue
+            if "partial_r" in ex and not p.get("partial_done") and p.get("stop_dist0"):
+                # Take part of the profit at partial_r R, keep the rest running with its stop at breakeven.
+                target = p["entry"] + d * ex["partial_r"] * p["stop_dist0"]
+                if (d > 0 and highs[m] >= target) or (d < 0 and lows[m] <= target):
+                    fill = max(opens[m], target) if d > 0 else min(opens[m], target)
+                    self._close(m, t, fill, "partial take profit", ex.get("partial_frac", 0.5))
+                    p["partial_done"] = True
+                    self._breakeven(m, p, d)
+            if "be_r" in ex and not p.get("be") and p.get("stop_dist0"):
+                # Once the trade is be_r R in profit, move the stop to entry (plus costs): it can no longer lose.
+                trigger = p["entry"] + d * ex["be_r"] * p["stop_dist0"]
+                if (d > 0 and highs[m] >= trigger) or (d < 0 and lows[m] <= trigger):
+                    self._breakeven(m, p, d)
             p["bars"] = p.get("bars", 0) + 1
             if "max_hold_h" in ex and p["bars"] >= ex["max_hold_h"]:
                 self.blocked[m] = d

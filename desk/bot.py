@@ -85,7 +85,7 @@ def step_ledger(role, cfg, led, data, feats, live_px, now):
             equity = old.realized
             history = old.trades
             notes.append(f"{role}: config changed, old positions closed, equity carried {equity:.2f}")
-        led = {"config": cfg, "book": dict(Book(markets, equity, exits={k: params.get(k) for k in ("trail_atr", "tp_r", "max_hold_h")}).to_dict(),
+        led = {"config": cfg, "book": dict(Book(markets, equity, exits={k: params.get(k) for k in ("trail_atr", "tp_r", "max_hold_h", "be_r", "partial_r", "partial_frac")}).to_dict(),
                              trades=history), "closed_through": None,
                "opened_bar": None, "live_open": {}}
 

@@ -69,6 +69,9 @@ for _name, _extra, _idea in [
     ("trend_4h_trail", {"trail_atr": [4.0, 6.0]}, "Same trend entries; a trailing stop follows the best price to lock in profit."),
     ("trend_4h_tp", {"tp_r": [2.0, 3.0]}, "Same trend entries; take the profit at 2R or 3R."),
     ("trend_4h_time", {"max_hold_h": [24 * 5, 24 * 10]}, "Same trend entries; close any trade after 5 or 10 days."),
+    ("trend_4h_be", {"be_r": [1.0, 2.0]}, "Same trend entries; once 1R or 2R in profit, the stop moves to breakeven."),
+    ("trend_4h_partial", {"partial_r": [1.0, 2.0], "partial_frac": [0.5]},
+     "Same trend entries; take half the profit at 1R or 2R, stop to breakeven, let the rest run."),
 ]:
     STRATEGIES[_name] = dict(STRATEGIES["trend_4h"], idea=_idea,
                              grid=grid(lookback_4h=[30, 60, 120], stop_atr=[4.0, 8.0], **_extra))
@@ -87,7 +90,7 @@ def targets_for(name, params, markets):
 
 
 def exits_of(p):
-    return {k: p.get(k) for k in ("trail_atr", "tp_r", "max_hold_h")}
+    return {k: p.get(k) for k in ("trail_atr", "tp_r", "max_hold_h", "be_r", "partial_r", "partial_frac")}
 
 
 def single(name, params, m, start, end, risk=C.RISK_PER_TRADE, cost_mult=1.0):
