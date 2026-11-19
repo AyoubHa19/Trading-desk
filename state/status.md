@@ -1,4 +1,4 @@
-# Paper desk status — 2026-11-19 10:00 New York
+# Paper desk status — 2026-11-19 11:00 New York
 
 PAPER ONLY. No real orders. Prices: OKX public API.
 
