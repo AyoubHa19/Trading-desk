@@ -1,9 +1,9 @@
-# Paper desk status — 2026-11-27 10:00 New York
+# Paper desk status — 2026-11-27 11:00 New York
 
 PAPER ONLY. No real orders. Prices: OKX public API.
 
 ## champion: trend_4h (passed all gates)
-- realized equity: $99.83 (start $100)
+- realized equity: $99.84 (start $100)
 - today: halted=False  | losing streak=0
 - open BTC: SHORT 0.000187 @ 64839.7000, stop 68588.2333, risk $0.70
 - open ETH: SHORT 0.011878 @ 1806.9600, stop 1950.0033, risk $1.70
